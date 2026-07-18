@@ -29,7 +29,7 @@
 (function(){
   try{
     var beacon=new BeaconAction({
-      appkey:BEACON_APPKEY,
+      appkey:window.BEACON_APPKEY,
       versionCode:'1.0.0',
       channelID:'share',
       delay:1000,
@@ -41,7 +41,7 @@
       'url':location.href,
       'referrer':document.referrer,
       'title':document.title,
-      'sandbox_id':SANDBOX_ID
+      'sandbox_id':window.SANDBOX_ID
     });
   }catch(e){}
 })();
