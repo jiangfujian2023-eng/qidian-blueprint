@@ -434,7 +434,13 @@ function _restoreUS(){
   if(s){
     localStorage.setItem('qdbp_drawn_packages',JSON.stringify(s.drawn||[]));
     if(s.pkg) localStorage.setItem('qdbp_pkg',s.pkg); else localStorage.removeItem('qdbp_pkg');
-    localStorage.setItem('qdbp_start_state',JSON.stringify(s.start||{}));
+    // 恢复起点卡数据时，保持 {包名: {currentTarget:...}} 结构
+    if(s.pkg && s.start){
+      var restored={}; restored[s.pkg]=s.start;
+      localStorage.setItem('qdbp_start_state',JSON.stringify(restored));
+    }else{
+      localStorage.setItem('qdbp_start_state',JSON.stringify(s.start||{}));
+    }
   }else{
     localStorage.setItem('qdbp_drawn_packages','[]');
     localStorage.removeItem('qdbp_pkg');
