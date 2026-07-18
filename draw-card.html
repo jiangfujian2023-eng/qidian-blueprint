@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>央企起点卡 · 启点蓝图 v20260718-2232</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#f2f4f8;color:#1a1a2e;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.wrap{width:100%;max-width:460px;padding:20px;position:relative}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.top .l{font-size:11px;color:#8e96a8;letter-spacing:.08em;font-weight:600}
+.top .r{font-size:10px;color:#b0b7c4}
+.pg{margin:16px 0;text-align:center}.pg-t{font-size:16px;font-weight:700}.pg-s{font-size:11px;color:#8e96a8;margin-top:4px;line-height:1.5}
+/* 卡片通用 */
+.cd{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04);border:1px solid #eef0f4;position:relative;min-height:280px}
+.cd-top{height:100px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e3a5f,#2a4f7a)}
+.cd-top .pat{position:absolute;inset:0;opacity:.08;background-image:radial-gradient(circle at 30px 40px,rgba(255,255,255,.3) 1px,transparent 1px),radial-gradient(circle at 80px 20px,rgba(255,255,255,.15) 1px,transparent 1px);background-size:60px 60px,40px 40px;z-index:1}
+.cd-top .lg{font-size:56px;font-weight:800;color:#fff;position:relative;z-index:2;font-family:"STKaiti","Noto Serif SC",serif;letter-spacing:4px;text-shadow:0 2px 8px rgba(0,0,0,.2)}
+.cd-top .badge{position:absolute;top:10px;right:14px;font-size:8px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.1em;z-index:2}
+.cd-body{padding:18px 22px 16px}
+.cd-body .nm{font-size:18px;font-weight:700}.cd-body .ind{font-size:11px;color:#8e96a8;margin-bottom:6px}.cd-body .upd{font-size:10px;color:#b0b7c4;margin-bottom:6px}
+.posts{background:#f7f8fb;border-radius:12px;padding:10px 12px}
+.posts .pt{font-size:10px;color:#b0b7c4;font-weight:500;letter-spacing:.05em;margin-bottom:5px}
+.posts .pl{display:flex;flex-wrap:wrap;gap:4px}
+.posts .pl .i{padding:3px 10px;border-radius:100px;font-size:10.5px;background:#eef2fb;color:#3a5a8c;border:1px solid #e4e9f2;white-space:nowrap}
+.cd-top.bg-ene{background:linear-gradient(135deg,#064e3b,#047857)}.cd-top.bg-tech{background:linear-gradient(135deg,#1e3a8a,#2563eb)}.cd-top.bg-fin{background:linear-gradient(135deg,#78350f,#b45309)}.cd-top.bg-bld{background:linear-gradient(135deg,#78350f,#9a3412)}.cd-top.bg-car{background:linear-gradient(135deg,#7f1d1d,#991b1b)}.cd-top.bg-med{background:linear-gradient(135deg,#701a75,#86198f)}.cd-top.bg-mix{background:linear-gradient(135deg,#4c1d95,#6d28d9)}.cd-top.bg-ship{background:linear-gradient(135deg,#115e59,#0d9488)}
+/* 按钮通用 */
+.btn-row{display:flex;gap:8px;margin-top:14px}
+.btn-row button{flex:1;padding:12px;border-radius:12px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-sec{background:#f2f4f8;color:#6b7280;border:1px solid #e8ebf0}.btn-sec:hover{background:#e8ebf0;color:#374151}.btn-sec:disabled{opacity:.35;cursor:not-allowed}
+.btn-pri{background:linear-gradient(135deg,#1e3a5f,#2a4f7a);color:#fff;box-shadow:0 4px 12px rgba(30,58,95,.2)}.btn-pri:hover{box-shadow:0 6px 20px rgba(30,58,95,.3)}.btn-pri:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.collect-bar{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px}.collect-bar .st{display:flex;gap:6px}.collect-bar .st .pt{width:7px;height:7px;border-radius:50%;background:#dce0e8}.collect-bar .st .pt.on{background:#2a4f7a}
+/* 卡组 */
+.deck{padding:8px 0}.deck-title{font-size:13px;font-weight:600;text-align:center;margin-bottom:12px}
+.deck-cards{display:flex;flex-direction:column;gap:8px}
+.dc{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#fff;border:1.5px solid #eef0f4;cursor:pointer}.dc:hover{border-color:#c8ced8}.dc.sel{border-color:#1e3a5f;background:#f5f7fc}
+.dc .dl{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;font-family:"STKaiti","Noto Serif SC",serif}
+.dc .di{flex:1}.dc .dn{font-size:13px;font-weight:600}.dc .dd{font-size:10px;color:#8e96a8;margin-top:1px}
+.dc .dc{width:20px;height:20px;border-radius:50%;border:2px solid #dce0e8;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0}
+.dc.sel .dc{background:#1e3a5f;border-color:#1e3a5f}
+.deck-act{display:flex;gap:8px;margin-top:12px}
+.deck-act button{flex:1;padding:12px;border-radius:12px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+/* 岗位选择 */
+.roles{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.rl{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1.5px solid #eef0f4;background:#fff;cursor:pointer}
+.rl:hover{border-color:#c8ced8}.rl.sel{border-color:#1e3a5f;background:#f5f7fc}
+.rl .rc{width:16px;height:16px;border-radius:50%;border:2px solid #dce0e8;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rl.sel .rc{background:#1e3a5f;border-color:#1e3a5f}.rl.sel .rc::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
+.rl .rn{font-size:13px;font-weight:600;flex:1}.rl .rd{font-size:10px;color:#8e96a8}
+/* 体验卡 */
+.exp{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04);border:1px solid #eef0f4}
+.exp-head{background:linear-gradient(135deg,#1e3a5f,#2a4f7a);padding:16px 20px;color:#fff;position:relative}
+.exp-head .e-tag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:9px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);letter-spacing:.08em}
+.exp-head .e-co{font-size:20px;font-weight:700;margin-top:8px;letter-spacing:.02em}
+.exp-body{padding:16px 20px}
+.exp-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f2f4f8;font-size:12px}
+.exp-row:last-child{border:none}
+.exp-row .el{color:#8e96a8}.exp-row .ev{font-weight:600;color:#1a1a2e;text-align:right}
+.exp-sim{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:100px;font-size:10px;background:#fff3e0;color:#e65100;font-weight:600}
+/* 加载 */
+.loado{display:none;text-align:center;padding:16px 0}
+.loado .lt{font-size:13px;font-weight:600;margin-bottom:4px}
+.loado .ls{font-size:11px;color:#8e96a8;margin-bottom:14px;line-height:1.5}
+.loado .lb{width:100%;height:4px;border-radius:100px;background:#e8ebf0;overflow:hidden}
+.loado .lb span{display:block;height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,#1e3a5f,#3b82f6);animation:ld 2.8s ease forwards}
+@keyframes ld{0%{width:0}30%{width:25%}60%{width:55%}85%{width:82%}100%{width:100%}}
+.loado .lp{font-size:10px;color:#b0b7c4;margin-top:6px}
+/* 完成 */
+.suc{display:none;text-align:center;padding:20px 0}
+.suc .si{font-size:36px;margin-bottom:10px}
+.suc .st{font-size:15px;font-weight:700;line-height:1.5}
+.suc .ss{font-size:11px;color:#8e96a8;line-height:1.6;margin-top:6px}
+.suc .sb{display:inline-block;margin-top:14px;padding:10px 28px;border-radius:12px;border:none;background:linear-gradient(135deg,#1e3a5f,#2a4f7a);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.skipbar{text-align:center;margin-top:14px}
+.skipbar .skip{font-size:11px;color:#b0b7c4;text-decoration:underline;cursor:pointer;border:none;background:none;font-family:inherit;display:none}
+.note{font-size:10px;color:#c0c6d0;text-align:center;margin-top:10px;line-height:1.5;padding:6px 8px;background:#fafbfc;border-radius:8px}
+</style>
+<script src="https://beacon.cdn.qq.com/sdk/4.5.9/beacon_web.min.js"></script>
+<script>
+(function(){
+  try{
+    var beacon=new BeaconAction({
+      appkey:'0WEB06U85YBSLJNL',
+      versionCode:'1.0.0',
+      channelID:'share',
+      delay:1000,
+      sessionDuration:30*60*1000,
+      isOversea:false,
+      needReportRqdEvent:false
+    });
+    beacon.onDirectUserAction('preview_page_view',{
+      'url':location.href,
+      'referrer':document.referrer,
+      'title':document.title,
+      'sandbox_id':'e506a7306cbe4a8f8b113de9dbb5caf9'
+    });
+  }catch(e){}
+})();
+</script></head>
+<body>
+<div class="wrap" id="app">
+
+<!-- ═══ ═══ ═══ 阶段 1：抽卡 ═══ ═══ ═══ -->
+<div id="sDraw">
+  <div class="top"><div class="l">🎯 为你抽取第一家央企</div><div class="r" id="userTag">新用户</div></div>
+  <div class="pg"><div class="pg-t">抽一张央企起点卡</div><div class="pg-s" id="sDrawSub">解锁三家央企，再选一家作为你的目标起点。已收集 <span id="collectNum">0</span>/3</div></div>
+  <div class="cd" id="cd">
+    <div class="cd-top bg-def" id="cdTop"><div class="pat"></div><div class="lg" id="logo">—</div><div class="badge">起点卡</div></div>
+    <div class="cd-body">
+      <div class="nm" id="name">—</div>
+      <div class="ind" id="ind">央企集团</div>
+      <div class="upd">常见岗位方向</div>
+      <div class="posts"><div class="pt">常见岗位方向</div><div class="pl" id="posts"></div></div>
+    </div>
+  </div>
+  <div class="btn-row"><button class="btn-sec" id="btnDraw">🎴 再抽一张</button><button class="btn-pri" id="btnKeep">📥 收下这张</button></div>
+  <div class="collect-bar"><div class="lt">我的卡组</div><div class="st" id="dots"></div></div>
+  <div class="skipbar"><button class="skip" id="skipBtn" onclick="skipDraw()">跳过，直接进入工作区 →</button></div>
+</div>
+
+<!-- ═══ ═══ ═══ 阶段 2：卡组选择 ═══ ═══ ═══ -->
+<div id="sDeck" style="display:none">
+  <div class="top"><div class="l">🎯 选择你的起点企业</div><div class="r"></div></div>
+  <div class="pg"><div class="pg-t">你的央企起点卡组</div><div class="pg-s">选择一家作为目标，然后选择探索岗位</div></div>
+  <div class="deck"><div class="deck-title" id="deckTitle">已收集 <span id="deckNum">3</span> 张起点卡</div><div class="deck-cards" id="deckCards"></div>
+  <div class="deck-act"><button class="btn-sec" onclick="backToDraw()">🎴 再抽一轮</button><button class="btn-pri" id="btnNextRole" disabled>选择岗位 →</button></div></div>
+</div>
+
+<!-- ═══ ═══ ═══ 阶段 3：选岗位 ═══ ═══ ═══ -->
+<div id="sRole" style="display:none">
+  <div class="top"><div class="l">🎯 选择探索岗位</div><div class="r"></div></div>
+  <div class="pg"><div class="pg-t">选择你的探索岗位</div><div class="pg-s">先选择一个岗位方向，体验卡将围绕它生成</div></div>
+  <div class="cd"><div class="cd-top" id="roleTop"><div class="pat"></div><div class="lg" id="roleLogo">—</div></div>
+  <div class="cd-body"><div class="nm" id="roleName">—</div>
+  <div class="roles" id="roleList"></div></div></div>
+  <div class="btn-row"><button class="btn-sec" onclick="backToDeck()">← 重新选择企业</button><button class="btn-pri" id="btnNextCard" disabled>生成体验卡 →</button></div>
+</div>
+
+<!-- ═══ ═══ ═══ 阶段 4：体验卡 ═══ ═══ ═══ -->
+<div id="sCard" style="display:none">
+  <div class="top"><div class="l">🎯 目标岗位体验卡</div><div class="r"></div></div>
+  <div class="pg"><div class="pg-t">预览你的目标岗位体验卡</div><div class="pg-s">确认后保存为当前起点，开始求职准备</div></div>
+  <div class="exp">
+    <div class="exp-head">
+      <div class="e-tag">模拟目标 · 尚未入职</div>
+      <div class="e-co" id="cardCo">—</div>
+    </div>
+    <div class="exp-body">
+      <div class="exp-row"><span class="el">姓名</span><span class="ev" id="cardUser">—</span></div>
+      <div class="exp-row"><span class="el">目标企业</span><span class="ev" id="cardCompany">—</span></div>
+      <div class="exp-row"><span class="el">探索岗位</span><span class="ev" id="cardRole">—</span></div>
+      <div class="exp-row"><span class="el">当前进度</span><span class="ev" id="cardProgress">尚未开始</span></div>
+      <div class="exp-row"><span class="el">生成日期</span><span class="ev" id="cardDate">—</span></div>
+      <div class="exp-sim">🎯 模拟目标 · 尚未入职</div>
+    </div>
+  </div>
+  <div class="btn-row"><button class="btn-sec" onclick="backToRole()">← 重新选择岗位</button><button class="btn-pri" id="btnSaveCard">保存为我的当前起点</button></div>
+  <div class="note">想让这张卡更接近现实？从第一个真实行动开始。</div>
+</div>
+
+<!-- ═══ ═══ ═══ 阶段 5：加载 → 完成 ═══ ═══ ═══ -->
+<div class="loado" id="loado"><div class="lt">⏳ 正在装配</div><div class="ls" id="loadText">请耐心等待…</div><div class="lb"><span></span></div><div class="lp">系统正在准备中…</div></div>
+<div class="suc" id="suc">
+  <div class="si">🎉</div>
+  <div class="st">已将 <span class="sn" id="sucName"></span> 设为你的当前起点</div>
+  <div class="ss">接下来从央企求职通用流程开始。</div>
+  <div class="ss" style="font-size:10px;color:#b0b7c4;margin-top:2px">今天先完成：核验一个当前招聘机会并保存为候选</div>
+  <button class="sb" onclick="closeDraw()">🚀 开始第一个行动</button>
+</div>
+<div class="note" id="bottomNote">启点蓝图 · 央企起点卡不是替你做决定，而是帮你建立第一个候选池</div>
+
+</div><!-- /wrap -->
+<script>
+// ═══ 数据 ═══
+var C=[{n:"中国航天科技集团",i:"央企集团",t:"高端装备与国防科技",p:["技术研发岗","系统工程岗","项目管理岗","数据分析岗"]},{n:"中国航天科工集团",i:"央企集团",t:"高端装备与国防科技",p:["总体设计岗","制导控制岗","软件工程岗","质量管理岗"]},{n:"中国核工业集团",i:"央企集团",t:"核工业/核电",p:["核工程岗","辐射防护岗","电气工程岗","安全评估岗"]},{n:"中国华能集团",i:"央企集团",t:"电力/能源/新能源",p:["电力运行岗","新能源开发岗","财务岗","环保管理岗"]},{n:"国家能源投资集团",i:"央企集团",t:"煤炭/电力/新能源",p:["采矿工程岗","电力调度岗","碳管理岗","智能装备岗"]},{n:"中国中车集团",i:"央企集团",t:"轨道交通装备",p:["机械设计岗","电气工程岗","工艺工程岗","采购管理岗"]},{n:"国家电投集团",i:"央企集团",t:"能源/电力/核电",p:["核能工程岗","新能源研发岗","电力系统岗","资产运营岗"]},{n:"中国五矿",i:"央企集团",t:"矿产/钢铁/冶金",p:["矿产资源岗","冶金工程岗","国际贸易岗","财务分析岗"]},{n:"中国电信",i:"央企集团",t:"通信运营",p:["网络工程师岗","云计算研发岗","AI算法岗","市场运营岗"]},{n:"中国联通",i:"央企集团",t:"通信运营",p:["通信技术岗","大数据分析岗","政企客户岗","网络安全岗"]},{n:"中国移动",i:"央企集团",t:"通信运营",p:["通信工程岗","产品经理岗","AI研发岗","项目管理岗"]},{n:"中国商飞公司",i:"央企集团",t:"航空航天",p:["飞机设计岗","航电系统岗","航空材料岗","适航管理岗"]},{n:"东方电气集团",i:"央企集团",t:"能源装备",p:["汽轮机设计岗","风电研发岗","电气工程岗","质量控制岗"]},{n:"中粮集团",i:"央企集团",t:"农林/食品/贸易",p:["食品研发岗","供应链管理岗","国际贸易岗","品牌营销岗"]},{n:"南方电网",i:"央企集团",t:"电力/能源",p:["电力调度岗","继电保护岗","信息通信岗","市场营销岗"]},{n:"中国建筑",i:"央企集团",t:"建筑/基建",p:["土木工程岗","工程造价岗","安全管理岗","海外工程岗"]},{n:"中国铁建",i:"央企集团",t:"建筑/基建",p:["铁道工程岗","桥梁工程岗","盾构技术岗","物资管理岗"]},{n:"中国中铁",i:"央企集团",t:"建筑/基建",p:["工程管理岗","隧道工程岗","电气化岗","财务会计岗"]},{n:"中广核",i:"央企集团",t:"核电/新能源",p:["核电站运营岗","辐射防护岗","新能源开发岗","检修技术岗"]},{n:"上海电气",i:"央企集团",t:"能源/装备制造",p:["汽轮机设计岗","风电技术岗","智能制造岗","项目管理岗"]},{n:"东风汽车",i:"央企集团",t:"汽车制造",p:["整车设计岗","电驱动开发岗","智能座舱岗","供应链管理岗"]},{n:"中国化学工程",i:"央企集团",t:"化工/基建",p:["化工设计岗","工程管理岗","安全工程师岗","造价管理岗"]},{n:"中国建材集团",i:"央企集团",t:"建材/新材料",p:["材料研发岗","生产管理岗","质量管理岗","市场开发岗"]},{n:"中国医药集团",i:"央企集团",t:"医药/医疗",p:["药品研发岗","质量管理岗","医药代表岗","物流管理岗"]},{n:"招商局集团",i:"央企集团",t:"综合/金融/交通",p:["金融投资岗","港口运营岗","物流管理岗","法律合规岗"]},{n:"华润集团",i:"央企集团",t:"综合/大消费",p:["管培生岗","财务管理岗","市场营销岗","运营管理岗"]},{n:"保利集团",i:"央企集团",t:"综合/地产/文化",p:["地产投资岗","文旅运营岗","国际贸易岗","法律合规岗"]},{n:"中国物流集团",i:"央企集团",t:"物流/供应链",p:["物流规划岗","供应链管理岗","信息技术岗","运营管理岗"]},{n:"华侨城集团",i:"央企集团",t:"文旅/地产",p:["文旅策划岗","建筑设计岗","运营管理岗","品牌营销岗"]},{n:"中国通用技术集团",i:"央企集团",t:"先进制造/医疗",p:["机械设计岗","医院管理岗","国际贸易岗","财务岗"]}];
+
+var pool=C.slice(),cur=null,deck=[],selIdx=-1,userName='',selectedRole=-1;
+function rn(n){return Math.floor(Math.random()*n)}
+function pick(){var c=pool[rn(pool.length)]||C[0];pool=pool.filter(function(x){return x.n!==c.n});if(pool.length<3)pool=C.slice();return c}
+function gc(c){var t=c.n+' '+(c.t||'')+(c.i||'');
+  if(t.indexOf('能源')!==-1||t.indexOf('电力')!==-1||t.indexOf('核')!==-1)return'bg-ene';
+  if(t.indexOf('通信')!==-1||t.indexOf('软件')!==-1||t.indexOf('互联网')!==-1||t.indexOf('电信')!==-1||t.indexOf('移动')!==-1)return'bg-tech';
+  if(t.indexOf('金融')!==-1||t.indexOf('资本')!==-1||t.indexOf('招商')!==-1||t.indexOf('证券')!==-1)return'bg-fin';
+  if(t.indexOf('建筑')!==-1||t.indexOf('基建')!==-1||t.indexOf('工程')!==-1||t.indexOf('地产')!==-1||t.indexOf('中建')!==-1||t.indexOf('中铁')!==-1||t.indexOf('华侨城')!==-1||t.indexOf('保利')!==-1)return'bg-bld';
+  if(t.indexOf('汽车')!==-1||t.indexOf('东风')!==-1)return'bg-car';
+  if(t.indexOf('医药')!==-1||t.indexOf('医疗')!==-1)return'bg-med';
+  if(t.indexOf('航运')!==-1||t.indexOf('物流')!==-1||t.indexOf('远洋')!==-1)return'bg-ship';
+  if(t.indexOf('综合')!==-1||t.indexOf('华润')!==-1||t.indexOf('中粮')!==-1)return'bg-mix';
+  return'bg-def'
+}
+function renderCard(c){
+  if(!c)return;
+  var n=c.n.replace(/[（(].*/,'').replace(/集团.*$/,'').replace(/有限公司.*$/,'').trim();
+  document.getElementById('logo').textContent=n.charAt(0);
+  document.getElementById('name').textContent=c.n;
+  document.getElementById('ind').textContent=(c.i||'央企')+' · '+(c.t||'');
+  document.getElementById('posts').innerHTML=(c.p||[]).map(function(p){return'<span class="i">'+p+'</span>'}).join('');
+  document.getElementById('cdTop').className='cd-top '+gc(c);
+}
+function upColl(){
+  var cn=document.getElementById('collectNum');
+  if(cn)cn.textContent=deck.length;
+  var ds=document.getElementById('dots');
+  if(ds){
+    ds.innerHTML='';
+    for(var i=0;i<3;i++){var d=document.createElement('div');d.className='pt'+(i<deck.length?' on':'');ds.appendChild(d)}
+  }
+  if(deck.length>=3){
+    var bd=document.getElementById('btnDraw'),bk=document.getElementById('btnKeep');
+    if(bd)bd.disabled=true;if(bk)bk.disabled=true;
+    var sds=document.getElementById('sDrawSub');
+    if(sds)sds.textContent='三家央企已集齐，请选择一家作为起点 →';
+    setTimeout(showDeck,400);
+  }
+}
+function showDeck(){
+  hideAll();var sd=document.getElementById('sDeck');if(sd)sd.style.display='block';
+  var dn=document.getElementById('deckNum');if(dn)dn.textContent=deck.length;
+  var html='';
+  console.log('[draw-card] showDeck called, deck.length=',deck.length,deck);
+  deck.forEach(function(c,i){
+    if(!c){console.warn('[draw-card] null entry at',i);return;}
+    var cl=gc(c);
+    html+='<div class="dc" id="dc'+i+'" onclick="selDeck('+i+')">';
+    html+='<div class="dl" style="background:linear-gradient(135deg,'+(cl==='bg-ene'?'#064e3b,#047857':cl==='bg-tech'?'#1e3a8a,#2563eb':cl==='bg-fin'?'#78350f,#b45309':cl==='bg-bld'?'#78350f,#9a3412':cl==='bg-car'?'#7f1d1d,#991b1b':cl==='bg-med'?'#701a75,#86198f':cl==='bg-ship'?'#115e59,#0d9488':cl==='bg-mix'?'#4c1d95,#6d28d9':'#1e3a5f,#2a4f7a')+')">'+c.n.charAt(0)+'</div>';
+    html+='<div class="di"><div class="dn">'+c.n+'</div><div class="dd">'+(c.t||'')+'</div></div>';
+    html+='<div class="dck" id="ck'+i+'"></div>';
+    html+='</div>';
+  });
+  console.log('[draw-card] html length=',html.length);
+  var dc=document.getElementById('deckCards');if(dc)dc.innerHTML=html;else console.error('[draw-card] deckCards element not found');
+  selIdx=-1;
+  var bnr=document.getElementById('btnNextRole');if(bnr)bnr.disabled=true;
+}
+function selDeck(i){
+  selIdx=i;
+  document.querySelectorAll('.dc').forEach(function(e){e.classList.remove('sel')});
+  var d=document.getElementById('dc'+i);if(d)d.classList.add('sel');
+  var b=document.getElementById('btnNextRole');if(b)b.disabled=false;
+}
+function showRoles(){
+  if(selIdx<0)return;
+  var c=deck[selIdx];if(!c)return;
+  hideAll();document.getElementById('sRole').style.display='block';
+  var n=c.n.replace(/[（(].*/,'').replace(/集团.*$/,'').replace(/有限公司.*$/,'').trim();
+  document.getElementById('roleLogo').textContent=n.charAt(0);
+  document.getElementById('roleName').textContent=c.n;
+  document.getElementById('roleTop').className='cd-top '+gc(c);
+  var html='';window.selectedRole=-1;
+  (c.p||['技术岗','管理岗']).forEach(function(p,i){
+    html+='<div class="rl" id="rl'+i+'" onclick="selRole('+i+')"><div class="rc" id="rck'+i+'"></div><div class="rn">'+p+'</div></div>';
+  });
+  document.getElementById('roleList').innerHTML=html;
+  document.getElementById('btnNextCard').disabled=true;
+}
+function selRole(i){
+  selectedRole=i;
+  document.querySelectorAll('.rl').forEach(function(e){e.classList.remove('sel')});
+  document.getElementById('rl'+i).classList.add('sel');
+  document.getElementById('btnNextCard').disabled=false;
+}
+function showCard(){
+  if(selIdx<0||selectedRole<0)return;
+  var c=deck[selIdx],r=c.p[selectedRole];
+  hideAll();document.getElementById('sCard').style.display='block';
+  document.getElementById('cardUser').textContent=userName||'体验用户';
+  document.getElementById('cardCompany').textContent=c.n;
+  document.getElementById('cardRole').textContent=r;
+  document.getElementById('cardProgress').textContent='尚未开始';
+  var d=new Date();document.getElementById('cardDate').textContent=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+  document.getElementById('cardCo').textContent=c.n.replace(/集团.*$/,'').trim()+' · '+r;
+}
+function hideAll(){['sDraw','sDeck','sRole','sCard','loado','suc'].forEach(function(id){document.getElementById(id).style.display='none'});}
+function backToDraw(){hideAll();document.getElementById('sDraw').style.display='block'}
+function backToDeck(){showDeck()}
+function backToRole(){showRoles()}
+function goDeckToRole(){showRoles()}
+// 取本地用户名（兼容真实账号 qdbp_user 与 demo 账号 qdbp_demo_user）
+function getLocalUserName(){
+  try{
+    var u=localStorage.getItem('qdbp_user');
+    if(u)return JSON.parse(u).name||'';
+    var d=localStorage.getItem('qdbp_demo_user');
+    if(d){var du=JSON.parse(d);return du.display_name||du.username||'';}
+  }catch(e){}
+  return '';
+}
+// ═══ 按账号隔离的抽卡/选包状态（与 index.html 保持一致） ═══
+function _uk(){
+  try{
+    var u=JSON.parse(localStorage.getItem('qdbp_user')||'null');
+    if(u&&u.email) return 'u:'+u.email;
+    var d=JSON.parse(localStorage.getItem('qdbp_demo_user')||'null');
+    if(d&&d.username) return 'd:'+d.username;
+  }catch(e){}
+  return null;
+}
+function _loadUS(){
+  var k=_uk(); if(!k) return null;
+  try{var m=JSON.parse(localStorage.getItem('qdbp_user_state')||'{}'); return m[k]||null;}catch(e){return null;}
+}
+function _restoreUS(){
+  var s=_loadUS();
+  if(s){
+    localStorage.setItem('qdbp_drawn_packages',JSON.stringify(s.drawn||[]));
+    if(s.pkg) localStorage.setItem('qdbp_pkg',s.pkg); else localStorage.removeItem('qdbp_pkg');
+    localStorage.setItem('qdbp_start_state',JSON.stringify(s.start||{}));
+  }else{
+    localStorage.setItem('qdbp_drawn_packages','[]');
+    localStorage.removeItem('qdbp_pkg');
+    localStorage.setItem('qdbp_start_state','{}');
+  }
+}
+function _persistDraw(pkg,start){
+  var k=_uk(); if(!k) return;
+  var m=JSON.parse(localStorage.getItem('qdbp_user_state')||'{}');
+  m[k]={drawn:[pkg],pkg:pkg,start:start||null};
+  localStorage.setItem('qdbp_user_state',JSON.stringify(m));
+}
+// 抽卡
+function drawCard(){if(deck.length>=3)return;cur=pick();renderCard(cur);if(deck.length===0){document.getElementById('btnKeep').textContent='📥 收下这张';document.getElementById('btnDraw').textContent='🎴 再抽一张';}}
+function keepCard(){
+  if(!cur||deck.length>=3)return;
+  deck.push(cur);upColl();
+  if(deck.length<3){cur=pick();renderCard(cur)}
+}
+// 保存
+function saveCard(){
+  if(selIdx<0||selectedRole<0)return;
+  var c=deck[selIdx],r=c.p[selectedRole];
+  hideAll();document.getElementById('loado').style.display='block';
+  document.getElementById('loadText').textContent='正在为'+c.n+'('+r+')匹配流程及资源，请耐心等待…';
+  setTimeout(function(){
+    hideAll();document.getElementById('suc').style.display='block';
+    document.getElementById('sucName').textContent=r+'·'+c.n.replace(/集团.*$/,'').trim();
+    // 存 state
+    var state=JSON.parse(localStorage.getItem('qdbp_start_state')||'{}');
+    state.zhaopin={guided:true,currentTarget:{name:c.n,ind:c.t||'',role:r},drawnCards:deck.map(function(x){return{name:x.n,ind:x.t||''}})};
+    localStorage.setItem('qdbp_start_state',JSON.stringify(state));
+    localStorage.setItem('qdbp_pkg','zhaopin');
+    var d=JSON.parse(localStorage.getItem('qdbp_drawn_packages')||'[]');
+    if(d.indexOf('zhaopin')===-1)d.push('zhaopin');
+    localStorage.setItem('qdbp_drawn_packages',JSON.stringify(d));
+    _persistDraw('zhaopin', state.zhaopin);
+  },2800);
+}
+function closeDraw(){window.location.href='index.html?ws=1&v='+Date.now()}
+function skipDraw(){
+  var d=JSON.parse(localStorage.getItem('qdbp_drawn_packages')||'[]');
+  if(d.indexOf('zhaopin')===-1)d.push('zhaopin');
+  localStorage.setItem('qdbp_drawn_packages',JSON.stringify(d));
+    localStorage.setItem('qdbp_pkg','zhaopin');
+    _persistDraw('zhaopin', null);
+    window.location.href='index.html?ws=1&v='+Date.now();
+}
+// 事件
+document.getElementById('btnDraw').onclick=drawCard;
+document.getElementById('btnKeep').onclick=keepCard;
+document.getElementById('btnNextRole').onclick=goDeckToRole;
+document.getElementById('btnNextCard').onclick=showCard;
+document.getElementById('btnSaveCard').onclick=saveCard;
+// 初始化
+(function(){
+  var isNew=!localStorage.getItem('qdbp_user')&&!localStorage.getItem('qdbp_demo_user');
+  document.getElementById('userTag').textContent=isNew?'新用户':'已有账号';
+  _restoreUS(); // 按账号还原，避免直接访问本页时串号
+  var drawn=JSON.parse(localStorage.getItem('qdbp_drawn_packages')||'[]');
+  if(!isNew&&drawn.indexOf('zhaopin')!==-1){skipDraw();return}
+  if(!isNew)document.getElementById('skipBtn').style.display='inline';
+  userName=getLocalUserName();
+  cur=pick();renderCard(cur);upColl();document.getElementById('sDrawSub').textContent='解锁三家央企，再选一家作为你的目标起点。已收集 0/3';
+})();
+</script>
+</body>
+</html>
