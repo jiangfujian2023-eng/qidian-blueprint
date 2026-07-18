@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>创业者启动包 · 启点蓝图</title>
+<meta name="description" content="为互联网创业者打造的启动包，把复杂的决策变成清晰的行动。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand-dark:#0B2A4A;--brand:#2F6BFF;--brand-mid:#4A82FF;--brand-light:#7BA1FF;
+  --brand-soft:#EBF0FF;--brand-fade:#F3F7FF;--brand-mist:#F8FAFF;
+  --accent-purple:#7c3aed;--accent-purple-light:#a78bfa;
+  --accent-deep:#5b21b6;
+  --bg:#ffffff;--bg-soft:#F3F7FF;--bg-card:#ffffff;
+  --text:#0B2A4A;--text-secondary:#45607A;--text-tertiary:#8FA6BD;
+  --border:rgba(47,107,255,0.08);--border-strong:rgba(47,107,255,0.18);
+  --shadow-sm:0 1px 3px rgba(11,42,74,0.06);--shadow-md:0 4px 16px rgba(11,42,74,0.08);
+  --shadow-lg:0 12px 40px rgba(11,42,74,0.1);
+  --serif:"Noto Serif SC","Source Han Serif SC",serif;
+  --sans:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);font-family:var(--sans)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:20px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--text);flex-shrink:0}
+.nav-brand img{width:28px;height:28px;border-radius:6px}
+.nav-group{display:flex;align-items:center;gap:22px}
+.nav-item{font-size:13px;font-weight:500;color:var(--text-secondary);transition:color .2s ease;cursor:pointer;white-space:nowrap}
+.nav-item:hover,.nav-item.current{color:var(--brand)}
+.nav-dropdown{position:relative;display:inline-flex}
+.nav-dropdown-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;transition:color .2s ease;border:none;background:none;font-family:inherit;padding:0}
+.nav-dropdown-btn:hover{color:var(--brand)}
+.nav-dropdown-btn svg{opacity:.4;transition:transform .2s ease}
+.nav-dropdown.open .nav-dropdown-btn svg{transform:rotate(180deg)}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 10px);right:0;min-width:280px;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:6px;box-shadow:0 12px 40px rgba(11,42,74,.12),0 2px 8px rgba(11,42,74,.04);opacity:0;pointer-events:none;transform:translateY(-6px) scale(.97);transition:all .2s cubic-bezier(.16,1,.3,1);z-index:1000}
+.nav-dropdown.open .nav-dropdown-menu{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.nav-dropdown-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .15s ease;color:var(--text)}
+.nav-dropdown-item:hover{background:var(--bg-soft)}
+.nav-dropdown-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff}
+.nav-dropdown-name{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
+.nav-dropdown-tag{font-size:9px;padding:1px 6px;border-radius:100px;font-weight:600}
+.nav-dropdown-tag.sale{background:rgba(47,107,255,.12);color:var(--brand)}
+.nav-dropdown-tag.wip{background:rgba(245,158,11,.12);color:#d97706}
+.nav-dropdown-tag.soon{background:rgba(100,116,139,.15);color:#64748b}
+.nav-dropdown-desc{font-size:10px;color:var(--text-tertiary);margin-top:1px;line-height:1.4}
+
+/* PLACEHOLDER HERO */
+.hero-placeholder{
+  position:relative;
+  padding:90px 28px 100px;
+  background:linear-gradient(180deg,var(--brand-mist) 0%,var(--bg) 100%);
+  overflow:hidden;
+  text-align:center;
+}
+.hero-placeholder::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--brand) 0%,var(--brand-light) 50%,var(--brand) 100%)}
+.hero-placeholder::after{content:"";position:absolute;top:30%;left:10%;width:300px;height:300px;background:radial-gradient(circle,rgba(47,107,255,.08),transparent 70%);border-radius:50%;pointer-events:none}
+.hero-placeholder-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(124,58,237,.1);color:var(--accent-deep);border-radius:100px;font-size:11px;font-weight:600;margin-bottom:20px;border:1px solid rgba(124,58,237,.2)}
+.hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-purple);box-shadow:0 0 8px var(--accent-purple-light);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-title{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:16px}
+.hero-title em{font-style:normal;background:linear-gradient(120deg,var(--brand) 0%,var(--accent-purple) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:28px;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-note{font-size:12px;color:var(--text-tertiary);padding:12px 18px;background:rgba(255,255,255,.6);border:1px dashed var(--border-strong);border-radius:10px;display:inline-block}
+
+/* ═══════════════════════════════════════════
+   使命愿景板块（核心）
+   ═══════════════════════════════════════════ */
+.mission{position:relative;padding:90px 28px 60px;background:#fff;overflow:hidden}
+.mission::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:
+  radial-gradient(ellipse 60% 40% at 10% 0%,rgba(47,107,255,.05) 0%,transparent 60%),
+  radial-gradient(ellipse 50% 40% at 90% 100%,rgba(124,58,237,.05) 0%,transparent 60%);
+  pointer-events:none}
+.mission-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto}
+
+/* 顶部 Hero */
+.mission-hero{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;margin-bottom:80px}
+.mission-hero-text .eyebrow{font-size:11px;font-weight:600;letter-spacing:0.16em;color:var(--brand);text-transform:uppercase;margin-bottom:14px;display:inline-block}
+.mission-hero-text .eyebrow::before{content:"";display:inline-block;width:24px;height:1px;background:var(--brand);vertical-align:middle;margin-right:10px}
+.mission-hero-text h2{font-family:var(--serif);font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:18px}
+.mission-hero-text h2 em{font-style:normal;background:linear-gradient(120deg,var(--brand) 0%,var(--accent-purple) 60%,var(--accent-purple-light) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline}
+.mission-hero-text .lead{font-size:15px;color:var(--text-secondary);line-height:1.75;max-width:520px}
+.mission-hero-visual{position:relative;height:380px;display:flex;align-items:center;justify-content:center}
+.mission-visual-circle{
+  width:320px;height:320px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(47,107,255,.08) 0%,rgba(124,58,237,.08) 100%);
+  position:relative;display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 60px rgba(47,107,255,.05);
+}
+.mission-visual-circle::before{content:"";position:absolute;inset:-20px;border:1.5px dashed rgba(47,107,255,.3);border-radius:50%;opacity:.6;animation:rotate 30s linear infinite}
+.mission-visual-circle::after{content:"";position:absolute;inset:-40px;border:1px dashed rgba(124,58,237,.2);border-radius:50%;opacity:.4;animation:rotate 50s linear infinite reverse}
+@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.mission-visual-icon{font-size:120px;filter:drop-shadow(0 8px 16px rgba(11,42,74,.1))}
+.mission-visual-circle .float-orb{position:absolute;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:0 4px 16px rgba(11,42,74,.1);display:flex;align-items:center;justify-content:center;font-size:24px}
+.mission-visual-circle .float-orb.f1{top:10%;left:5%;animation:float 6s ease-in-out infinite}
+.mission-visual-circle .float-orb.f2{top:50%;right:0;animation:float 7s ease-in-out infinite reverse;animation-delay:-2s}
+.mission-visual-circle .float-orb.f3{bottom:10%;left:15%;animation:float 8s ease-in-out infinite;animation-delay:-4s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* 三大卡片：愿景/使命/价值观 */
+.tri-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:100px}
+.tri-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:18px;padding:32px 28px;position:relative;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+.tri-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--border-strong)}
+.tri-card .ico{
+  width:52px;height:52px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(47,107,255,.1),rgba(124,58,237,.1));
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;color:var(--brand);
+  margin-bottom:20px;
+}
+.tri-card.t2 .ico{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(239,68,68,.1));color:#d97706}
+.tri-card.t3 .ico{background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(20,184,166,.1));color:#10b981}
+.tri-card .label{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.tri-card .label .en{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--text-tertiary);text-transform:uppercase}
+.tri-card .desc{font-size:14px;color:var(--text-secondary);line-height:1.65;margin-bottom:14px}
+.tri-card .detail{font-size:13px;color:var(--text-tertiary);line-height:1.65;padding-top:14px;border-top:1px solid var(--border)}
+
+/* 价值观分区 */
+.values-section{margin-bottom:80px}
+.section-title{text-align:center;margin-bottom:50px;position:relative}
+.section-title h3{font-family:var(--serif);font-size:clamp(1.4rem,2.8vw,1.8rem);font-weight:700;letter-spacing:-0.02em;display:inline-block;position:relative;padding:0 32px}
+.section-title h3::before,.section-title h3::after{content:"";position:absolute;top:50%;width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong))}
+.section-title h3::before{right:100%}
+.section-title h3::after{left:100%;background:linear-gradient(90deg,var(--border-strong),transparent)}
+.section-title .deco{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%;background:var(--brand)}
+.values-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.value-card{text-align:center;padding:24px 16px;border-radius:14px;transition:all .3s ease;position:relative}
+.value-card:hover{background:var(--bg-soft)}
+.value-card .v-ico{width:56px;height:56px;border-radius:50%;background:rgba(47,107,255,.08);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--brand);margin:0 auto 14px;transition:all .3s ease}
+.value-card:hover .v-ico{background:var(--brand);color:#fff;transform:scale(1.08)}
+.value-card .v-title{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px}
+.value-card .v-desc{font-size:12px;color:var(--text-secondary);line-height:1.6}
+
+/* 承诺区（深紫背景） */
+.commit-section{
+  position:relative;
+  background:linear-gradient(135deg,#5b21b6 0%,#7c3aed 50%,#a78bfa 100%);
+  border-radius:24px;padding:60px 40px;
+  color:#fff;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(91,33,182,.3);
+}
+.commit-section::before{content:"";position:absolute;top:-50%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 60%);border-radius:50%;pointer-events:none}
+.commit-section::after{content:"";position:absolute;bottom:-30%;left:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,.05),transparent 60%);border-radius:50%;pointer-events:none}
+.commit-section .section-title h3{color:#fff}
+.commit-section .section-title h3::before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.3))}
+.commit-section .section-title h3::after{background:linear-gradient(90deg,rgba(255,255,255,.3),transparent)}
+.commit-section .section-title .deco{background:#fff;box-shadow:0 0 12px rgba(255,255,255,.6)}
+.commit-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.commit-item{text-align:center;padding:18px 12px;position:relative}
+.commit-item:not(:last-child)::after{content:"";position:absolute;right:-8px;top:30%;height:40%;width:1px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.2),transparent)}
+.commit-item .c-ico{width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;border:1px solid rgba(255,255,255,.2)}
+.commit-item .c-title{font-family:var(--serif);font-size:15px;font-weight:700;margin-bottom:8px}
+.commit-item .c-desc{font-size:12px;opacity:.85;line-height:1.6}
+
+/* 底部 slogan */
+.mission-foot{text-align:center;padding:60px 20px 30px;position:relative}
+.mission-foot::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--border-strong),transparent)}
+.mission-foot .slogan{font-family:var(--serif);font-size:clamp(1.2rem,2.4vw,1.5rem);font-weight:700;letter-spacing:-0.01em;margin-bottom:10px}
+.mission-foot .slogan em{font-style:normal;background:linear-gradient(120deg,var(--brand) 0%,var(--accent-purple) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mission-foot .sub{font-size:13px;color:var(--text-secondary);max-width:480px;margin:0 auto}
+
+/* FINAL CTA */
+.final{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-soft) 100%);padding:70px 28px;text-align:center;border-top:1px solid var(--border)}
+.final-inner{max-width:680px;margin:0 auto}
+.final h2{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin-bottom:12px}
+.final p{font-size:14px;color:var(--text-secondary);margin-bottom:24px}
+.final-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.final-btn{display:inline-flex;align-items:center;gap:6px;padding:12px 24px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s ease;border:none;text-decoration:none;font-family:inherit}
+.final-btn.primary{background:var(--brand);color:#fff;box-shadow:0 6px 20px rgba(47,107,255,.25)}
+.final-btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(47,107,255,.3)}
+.final-btn.secondary{background:transparent;color:var(--text);border:1.5px solid var(--border-strong)}
+.final-btn.secondary:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-fade)}
+.final-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* FOOTER */
+.footer{background:var(--bg-soft);padding:30px 28px;text-align:center;border-top:1px solid var(--border);font-size:12px;color:var(--text-tertiary)}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .mission-hero{grid-template-columns:1fr;gap:30px;margin-bottom:50px}
+  .mission-hero-visual{height:280px;order:-1}
+  .mission-visual-circle{width:240px;height:240px}
+  .tri-cards{grid-template-columns:1fr;gap:14px;margin-bottom:60px}
+  .values-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .commit-section{padding:40px 20px;border-radius:18px}
+  .commit-grid{grid-template-columns:repeat(2,1fr);gap:18px 12px}
+  .commit-item:not(:last-child)::after{display:none}
+}
+@media (max-width:640px){
+  .nav-inner{padding:0 16px;gap:10px}
+  .nav-brand span{display:none}
+  .nav-group{gap:12px}
+  .hero-placeholder{padding:60px 20px 70px}
+  .mission{padding:60px 20px 40px}
+  .tri-card{padding:24px 20px}
+  .commit-section{padding:32px 16px}
+  .commit-grid{grid-template-columns:1fr 1fr}
+  .final{padding:50px 20px}
+}
+</style>
+<script src="https://beacon.cdn.qq.com/sdk/4.5.9/beacon_web.min.js"></script>
+<script>
+(function(){
+  try{
+    var beacon=new BeaconAction({
+      appkey:'0WEB06U85YBSLJNL',
+      versionCode:'1.0.0',
+      channelID:'share',
+      delay:1000,
+      sessionDuration:30*60*1000,
+      isOversea:false,
+      needReportRqdEvent:false
+    });
+    beacon.onDirectUserAction('preview_page_view',{
+      'url':location.href,
+      'referrer':document.referrer,
+      'title':document.title,
+      'sandbox_id':'bb320abbd7e444729e0451e3ef00ce0b'
+    });
+  }catch(e){}
+})();
+</script></head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand" style="text-decoration:none">
+      <span style="font-weight:800;color:var(--text);font-family:var(--serif);font-size:18px;letter-spacing:-.01em">启点蓝图</span>
+      <span style="font-size:12px;font-weight:400;font-family:'KaiTi','STKaiti','Noto Serif SC',serif;font-style:italic;letter-spacing:.03em;color:var(--text-secondary);margin-left:2px">把迷茫，变成今天的行动</span>
+    </a>
+    <div class="nav-group">
+      <a href="index.html" class="nav-item">返回首页</a>
+      <div class="nav-dropdown" id="otherPkg">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(event)">其他启动包 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-dropdown-menu" id="otherPkgMenu">
+          <a href="zhaopin.html" class="nav-dropdown-item">
+            <div class="nav-dropdown-icon" style="background:linear-gradient(135deg,#E87524,#f59e0b)">🏢</div>
+            <div><div class="nav-dropdown-name">央企求职启动包 <span class="nav-dropdown-tag sale">可售</span></div><div class="nav-dropdown-desc">7 天完成首批投递</div></div>
+          </a>
+          <a href="kaoyan.html" class="nav-dropdown-item">
+            <div class="nav-dropdown-icon" style="background:linear-gradient(135deg,#1F5A45,#34d399)">🎓</div>
+            <div><div class="nav-dropdown-name">考研择校启动包 <span class="nav-dropdown-tag wip">内测中</span></div><div class="nav-dropdown-desc">五阶段择校决策路径</div></div>
+          </a>
+          <a href="chuangye.html" class="nav-dropdown-item">
+            <div class="nav-dropdown-icon" style="background:linear-gradient(135deg,#5b21b6,#a78bfa)">🚀</div>
+            <div><div class="nav-dropdown-name">创业者启动包 <span class="nav-dropdown-tag soon">规划中</span></div><div class="nav-dropdown-desc">为互联网创业者打造</div></div>
+          </a>
+        </div>
+      </div>
+      <a href="javascript:void(0)" class="nav-item" onclick="goToMySpace()">我的启动包</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 启动包占位 Hero（用户说内容可以先不用考虑） -->
+<section class="hero-placeholder">
+  <div class="hero-placeholder-inner">
+    <span class="hero-tag"><span class="dot"></span>规划中 · 即将开放</span>
+    <h1 class="hero-title">大学生<em>创业者启动包</em>，<br>正在打造中。</h1>
+    <p class="hero-sub">为有创业想法的大学生，把模糊的方向、复杂的决策、漫长的启动期，<br>拆成一条可执行的行动路径。</p>
+    <span class="hero-note">📌 此页面内容正在筹备中，先呈现我们的使命、愿景与价值观</span>
+  </div>
+</section>
+
+<!-- 使命愿景价值观板块 -->
+<section class="mission">
+  <div class="mission-inner">
+
+    <!-- 顶部 Hero：使命大标题 + 装饰圆 -->
+    <div class="mission-hero">
+      <div class="mission-hero-text">
+        <span class="eyebrow">OUR MISSION</span>
+        <h2>我们的使命<br><em>让每一位创业者</em><br>从想法走向持续收入。</h2>
+        <p class="lead">启点蓝图通过 AI 驱动的行动引导系统，把复杂的创业决策变成清晰的下一个动作，陪伴每一位互联网时代的创业者，把想法变成可启动的项目，把项目变成可持续的收入。</p>
+      </div>
+      <div class="mission-hero-visual">
+        <div class="mission-visual-circle">
+          <div class="float-orb f1">🚀</div>
+          <div class="float-orb f2">💡</div>
+          <div class="float-orb f3">📈</div>
+          <div class="mission-visual-icon">🚀</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 三大卡片：愿景/使命/价值观 -->
+    <div class="tri-cards">
+      <div class="tri-card t1">
+        <div class="ico">🎯</div>
+        <div class="label">愿景 <span class="en">Vision</span></div>
+        <p class="desc">成为每一位互联网创业者的<strong>第一站</strong>。</p>
+        <p class="detail">构建一个开放、互助、共赢的全球青年创业者生态，让每一个有想法的人都能找到值得信赖的同伴与资源。</p>
+      </div>
+      <div class="tri-card t2">
+        <div class="ico">⛰️</div>
+        <div class="label">使命 <span class="en">Mission</span></div>
+        <p class="desc">用 AI 与行动力降低创业门槛，让更多人<strong>把想法变成持续收入</strong>。</p>
+        <p class="detail">从 0 到 1 出发，连接全球资源、工具与案例，陪伴每一位创业者完成从模糊到清晰的跨越。</p>
+      </div>
+      <div class="tri-card t3">
+        <div class="ico">💎</div>
+        <div class="label">价值观 <span class="en">Values</span></div>
+        <p class="desc">我们相信，<strong>行动改变命运</strong>，价值连接世界。</p>
+        <p class="detail">用真诚、专业与长期主义，陪伴每一位创业者成长；用真实案例与可复用经验，搭建一座从想法到结果的桥。</p>
+      </div>
+    </div>
+
+    <!-- 5 个价值观 -->
+    <div class="values-section">
+      <div class="section-title">
+        <h3>我们的价值观</h3>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="v-ico">👤</div>
+          <div class="v-title">用户为本</div>
+          <p class="v-desc">一切从创业者的真实需求出发，帮助他们真正解决问题，走向成果。</p>
+        </div>
+        <div class="value-card">
+          <div class="v-ico">🚀</div>
+          <div class="v-title">行动至上</div>
+          <p class="v-desc">相信行动的力量，快速实践、快速迭代，持续创造可复用的结果。</p>
+        </div>
+        <div class="value-card">
+          <div class="v-ico">💎</div>
+          <div class="v-title">真实透明</div>
+          <p class="v-desc">真实、真诚、开放，对用户负责，对伙伴负责，对结果负责。</p>
+        </div>
+        <div class="value-card">
+          <div class="v-ico">🤝</div>
+          <div class="v-title">合作共赢</div>
+          <p class="v-desc">连接优秀的人和资源，互相成就、共同成长，共享长期价值。</p>
+        </div>
+        <div class="value-card">
+          <div class="v-ico">∞</div>
+          <div class="v-title">长期主义</div>
+          <p class="v-desc">专注长期价值，持续打磨产品与服务，陪伴用户长期成长。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 承诺区（深紫背景） -->
+    <div class="commit-section">
+      <div class="section-title">
+        <h3>我们对每一位创业者的承诺</h3>
+      </div>
+      <div class="commit-grid">
+        <div class="commit-item">
+          <div class="c-ico">🧭</div>
+          <div class="c-title">为你指明方向</div>
+          <p class="c-desc">用清晰可执行的路径规划，代替空想与焦虑。</p>
+        </div>
+        <div class="commit-item">
+          <div class="c-ico">🪜</div>
+          <div class="c-title">为你降低门槛</div>
+          <p class="c-desc">用工具、资源和方法，帮你少走弯路。</p>
+        </div>
+        <div class="commit-item">
+          <div class="c-ico">💡</div>
+          <div class="c-title">为你解决卡点</div>
+          <p class="c-desc">遇到问题、有方案；遇到瓶颈，有支持。</p>
+        </div>
+        <div class="commit-item">
+          <div class="c-ico">📈</div>
+          <div class="c-title">为你放大成果</div>
+          <p class="c-desc">连接更多机会和资源，让你的影响力被更多人看见。</p>
+        </div>
+        <div class="commit-item">
+          <div class="c-ico">🫂</div>
+          <div class="c-title">与你长期同行</div>
+          <p class="c-desc">从开始到成功，启点一直在你身边。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部 slogan -->
+    <div class="mission-foot">
+      <div class="slogan">启点，<em>相信你，也陪伴你</em></div>
+      <p class="sub">从今天的一个行动，开启你无限可能的未来。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final">
+  <div class="final-inner">
+    <h2>想成为第一批<br>使用创业者启动包的人？</h2>
+    <p>我们正在为互联网创业者（含跨境电商、外贸、独立开发、内容创作等方向）打造启动包，预计 2026 Q4 上线。</p>
+    <div class="final-actions">
+      <button class="final-btn primary" disabled>即将开放 · 敬请期待</button>
+      <a href="index.html" class="final-btn secondary">返回首页</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 启点蓝图 · 把重要目标变成可以开始的行动路径</p>
+</footer>
+
+<script>
+function toggleDropdown(e){e&&e.stopPropagation();document.getElementById('otherPkg').classList.toggle('open')}
+document.addEventListener('click',function(){var d=document.getElementById('otherPkg');if(d)d.classList.remove('open')});
+function goToMySpace(){window.location.href='index.html?ws=1';}
+</script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>启点蓝图 · 内测体验邀请</title>
+<meta name="description" content="把迷茫，变成今天立刻就能开始的行动。无论求职、考研、留学、创业，启点帮你把复杂目标，拆成每天可落地的具体步骤。">
+<!-- Open Graph：微信分享卡片预览 -->
+<meta property="og:title" content="启点蓝图 · 内测体验邀请">
+<meta property="og:description" content="把迷茫，变成今天立刻就能开始的行动。无论求职、考研、留学、创业，启点帮你把复杂目标，拆成每天可落地的具体步骤。">
+<meta property="og:image" content="https://377701ffcb87465db084556a55110917.app.codebuddy.work/assets/images/logo.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:url" content="https://377701ffcb87465db084556a55110917.app.codebuddy.work/survey.html">
+<meta property="og:type" content="website">
+<!-- WeChat specific -->
+<meta name="wechat_title" content="启点蓝图 · 内测体验邀请">
+<meta name="wechat_desc" content="把迷茫，变成今天立刻就能开始的行动。">
+<meta name="wechat_thumb" content="https://377701ffcb87465db084556a55110917.app.codebuddy.work/assets/images/logo.png">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#f7f9fc;color:#0B2A4A;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+/* ── 顶部品牌条 ── */
+.survey-brand{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(47,107,255,.08);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.survey-brand-left{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--text,#0B2A4A)}
+.survey-brand-icon{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#2F6BFF,#4A82FF);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;box-shadow:0 2px 6px rgba(47,107,255,.3)}
+.survey-brand-tag{font-size:10px;padding:3px 9px;border-radius:100px;background:linear-gradient(135deg,#2F6BFF,#4A82FF);color:#fff;font-weight:600;letter-spacing:.02em}
+/* ── Hero ── */
+.survey-hero{text-align:center;padding:40px 20px 32px;background:linear-gradient(180deg,#f0f5ff 0%,#f7f9fc 100%);overflow:hidden}
+.survey-hero-inner{max-width:520px;margin:0 auto}
+.survey-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(47,107,255,.1);color:#2F6BFF;border-radius:100px;font-size:11px;font-weight:600;margin-bottom:16px}
+.survey-hero h1{font-size:clamp(1.5rem,5vw,2rem);font-weight:800;line-height:1.25;margin-bottom:12px;letter-spacing:-.01em;background:linear-gradient(135deg,#0B2A4A,#2F6BFF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.survey-hero p{font-size:14px;color:#45607A;line-height:1.7;max-width:440px;margin:0 auto}
+/* ── Section ── */
+.survey-section{padding:24px 20px;max-width:520px;margin:0 auto}
+.survey-section-title{font-size:14px;font-weight:700;color:#0B2A4A;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.survey-section-title .num{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#2F6BFF,#4A82FF);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.survey-step-card{background:#fff;border:1px solid #e5eaf2;border-radius:14px;padding:18px 20px;margin-bottom:12px;transition:all .2s ease}
+.survey-step-card:hover{box-shadow:0 4px 16px rgba(47,107,255,.08);border-color:#2F6BFF}
+.survey-step-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.survey-step-icon{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#ebf0ff,#f3f7ff);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.survey-step-title{font-size:14px;font-weight:700;color:#0B2A4A}
+.survey-step-body{font-size:13px;color:#45607A;line-height:1.6;padding-left:42px}
+.survey-link-btn{display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:9px 16px;border-radius:100px;font-size:12px;font-weight:600;text-decoration:none;transition:all .2s ease;border:none;cursor:pointer;font-family:inherit}
+.survey-link-btn.primary{background:#2F6BFF;color:#fff}
+.survey-link-btn.primary:hover{background:#4A82FF;transform:translateY(-1px);box-shadow:0 4px 12px rgba(47,107,255,.25)}
+.survey-link-btn.secondary{background:#f3f7ff;color:#2F6BFF;border:1px solid rgba(47,107,255,.15)}
+.survey-link-btn.secondary:hover{background:#ebf0ff}
+/* ── 信息卡片（账号 / 口令） ── */
+.survey-info-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.survey-info-card{padding:16px 18px;border-radius:14px;border:1px solid #e5eaf2;background:#fff}
+.survey-info-card.highlight{background:linear-gradient(135deg,#f0f5ff,#fff);border-color:rgba(47,107,255,.2)}
+.survey-info-label{font-size:11px;font-weight:600;color:#8FA6BD;letter-spacing:.05em;margin-bottom:6px;text-transform:uppercase}
+.survey-info-row{display:flex;align-items:center;gap:8px;font-size:13px;color:#0B2A4A;padding:3px 0}
+.survey-info-key{font-weight:500;color:#45607A;min-width:48px;flex-shrink:0}
+.survey-info-val{font-weight:700;font-family:"SF Mono","Menlo","Consolas",monospace;font-size:13px;background:#f3f7ff;padding:2px 8px;border-radius:6px;word-break:break-all}
+.survey-info-val.code{background:linear-gradient(135deg,#ebf0ff,#f3f7ff);color:#2F6BFF;font-size:14px;letter-spacing:2px;padding:4px 12px}
+/* ── CTA ── */
+.survey-cta{text-align:center;padding:8px 0 24px}
+.survey-cta-btn{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;border-radius:100px;background:linear-gradient(135deg,#2F6BFF,#4A82FF);color:#fff;border:none;font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .25s ease;box-shadow:0 6px 20px rgba(47,107,255,.25);font-family:inherit;width:100%;justify-content:center}
+.survey-cta-btn:active{transform:scale(.97);box-shadow:0 4px 12px rgba(47,107,255,.2)}
+.survey-cta-sub{font-size:12px;color:#8FA6BD;margin-top:10px;line-height:1.5}
+/* ── Footer ── */
+.survey-footer{text-align:center;padding:20px;font-size:11px;color:#8FA6BD;border-top:1px solid #e5eaf2;line-height:1.6;margin-top:8px}
+/* ── 步骤5：关键信息一览 ── */
+.survey-summary-grid{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+@media(min-width:480px){
+  .survey-hero{padding:56px 20px 36px}
+  .survey-step-body{padding-left:42px}
+  .survey-cta-btn{width:auto;min-width:280px}
+}
+@media(min-width:1024px){
+  .survey-section{max-width:600px;padding:32px 20px}
+  .survey-hero{padding:72px 20px 48px}
+  .survey-hero h1{font-size:2.2rem}
+}
+</style>
+<script src="https://beacon.cdn.qq.com/sdk/4.5.9/beacon_web.min.js"></script>
+<script>
+(function(){
+  try{
+    var beacon=new BeaconAction({
+      appkey:'0WEB06U85YBSLJNL',
+      versionCode:'1.0.0',
+      channelID:'share',
+      delay:1000,
+      sessionDuration:30*60*1000,
+      isOversea:false,
+      needReportRqdEvent:false
+    });
+    beacon.onDirectUserAction('preview_page_view',{
+      'url':location.href,
+      'referrer':document.referrer,
+      'title':document.title,
+      'sandbox_id':'bb320abbd7e444729e0451e3ef00ce0b'
+    });
+  }catch(e){}
+})();
+</script></head>
+<body>
+<header class="survey-brand">
+  <div class="survey-brand-left">
+    <span style="font-weight:700;color:#0B2A4A;font-size:15px">启点蓝图</span>
+    <span style="font-size:12px;color:#8FA6BD;font-weight:400;font-family:'KaiTi','STKaiti','Noto Serif SC',serif;font-style:italic;margin-left:2px">把迷茫，变成今天的行动</span>
+  </div>
+  <span class="survey-brand-tag">内测调研</span>
+</header>
+
+<section class="survey-hero">
+  <div class="survey-hero-inner">
+    <div class="survey-badge">🙋 诚邀你参与产品体验</div>
+    <h1>启点蓝图 · 内测体验邀请</h1>
+    <div style="font-size:clamp(1.2rem,4vw,1.6rem);font-weight:800;color:#0B2A4A;line-height:1.3;margin-bottom:6px;letter-spacing:-.01em">把迷茫，变成今天就能做的行动</div>
+    <p style="font-size:clamp(.85rem,2.5vw,1rem);color:#45607A;line-height:1.7;margin-bottom:18px;max-width:480px;margin-left:auto;margin-right:auto">不管求职、考研、留学、创业，不用自己瞎找、瞎猜、瞎摸索，启点帮你把复杂目标，拆成每天可落地的具体步骤。</p>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;text-align:left">
+      <div style="background:#fff;border:1px solid #e5eaf2;border-radius:14px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px">
+        <span style="font-size:22px;flex-shrink:0;line-height:1">🤖</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#0B2A4A">AI 驱动引擎</div>
+          <p style="font-size:12px;color:#45607A;line-height:1.6;margin:4px 0 0">基于多模态大模型（含 DeepSeek），整合全网专业知识、真实实践经验与 AI 能力，结合科学规划方法，为你提供从信息获取、路径规划到执行落地的一体化解决方案。</p>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #e5eaf2;border-radius:14px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px">
+        <span style="font-size:22px;flex-shrink:0;line-height:1">🎯</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#0B2A4A">从目标到行动</div>
+          <p style="font-size:12px;color:#45607A;line-height:1.6;margin:4px 0 0">帮助用户降低信息差、提高决策效率、加速目标实现。目前已接入多家大模型能力，提供更智能、高效的服务体验。</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:18px;background:linear-gradient(135deg,#f0f5ff,#fff);border:1px solid rgba(47,107,255,.15);border-radius:14px;padding:16px 18px;text-align:left">
+      <div style="font-size:13px;font-weight:700;color:#0B2A4A;margin-bottom:10px">🎓 大学蓝图板块 · 已覆盖场景</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <span style="background:rgba(47,107,255,.08);color:#2F6BFF;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600">🎓 考研择校</span>
+        <span style="background:rgba(239,68,68,.08);color:#dc2626;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600">🏢 央企求职</span>
+        <span style="background:rgba(16,185,74,.08);color:#059669;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600">📋 公务员考试</span>
+        <span style="background:rgba(139,92,246,.08);color:#7c3aed;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600">🌏 出国留学</span>
+        <span style="background:rgba(234,179,8,.08);color:#a16207;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600">🚀 大学生创业</span>
+        <span style="background:rgba(14,165,233,.08);color:#0369a1;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600">🤖 AI 技能提升</span>
+      </div>
+      <p style="font-size:12px;color:#45607A;line-height:1.6;margin:0">目前 <strong style="color:#2F6BFF">央企求职蓝图</strong> 与 <strong style="color:#2F6BFF">考研择校蓝图</strong> 已进入内测阶段，诚邀你参与体验并提出宝贵建议，帮助我们持续优化产品，为大学生打造更实用、更高效的 AI 成长工具。</p>
+    </div>
+  </div>
+</section>
+
+<section class="survey-section">
+  <div class="survey-section-title">
+    <span class="num">1</span>
+    <span>流程导览</span>
+  </div>
+  <div class="survey-step-card">
+    <div class="survey-step-head">
+      <div class="survey-step-icon">🗺️</div>
+      <div class="survey-step-title">建议先浏览完整页，了解流程再开始</div>
+    </div>
+    <div class="survey-step-body">
+      请先从上到下浏览本页所有步骤，了解完整流程后，再回到第 2 步开始领取账号。整个体验大约需要 10-15 分钟。
+    </div>
+  </div>
+</section>
+
+<section class="survey-section">
+  <div class="survey-section-title">
+    <span class="num">2</span>
+    <span>领取内测账号</span>
+  </div>
+  <div class="survey-step-card">
+    <div class="survey-step-head">
+      <div class="survey-step-icon">🎫</div>
+      <div class="survey-step-title">先生成你的专属体验账号</div>
+    </div>
+    <div class="survey-step-body">
+      点击下方按钮，系统自动分配一个可用账号。复制后直接前往官网登录体验。
+    </div>
+  </div>
+  <!-- 账号信息卡片 -->
+  <div class="survey-info-grid">
+    <div class="survey-info-card highlight" id="genAccountCard">
+      <div class="survey-info-label">🎫 领取你的内测账号</div>
+      <p style="font-size:13px;color:#45607A;margin-bottom:12px;line-height:1.6">点击下方按钮，系统自动分配一个可用账号。</p>
+      <div id="genResult" style="display:none;margin-bottom:12px">
+        <div class="survey-info-row">
+          <span class="survey-info-key">你的账号</span>
+          <span class="survey-info-val" id="genUsername" style="cursor:pointer" onclick="copyUsername()">—</span>
+          <button id="copyBtn" onclick="copyUsername()" style="padding:4px 10px;border:1px solid rgba(47,107,255,.2);border-radius:6px;background:#f3f7ff;color:#2F6BFF;font-size:11px;cursor:pointer;font-family:inherit">📋 复制</button>
+        </div>
+        <div class="survey-info-row" style="margin-top:6px">
+          <span class="survey-info-key">密码</span>
+          <span class="survey-info-val" style="background:rgba(239,68,68,.1);color:#dc2626;letter-spacing:2px;font-size:15px">123456</span>
+        </div>
+        <div class="survey-info-row" style="margin-top:4px">
+          <span class="survey-info-key">下载口令</span>
+          <span class="survey-info-val code" style="font-size:15px">888888</span>
+        </div>
+        <p style="font-size:12px;color:#45607A;margin-top:10px;line-height:1.6;background:rgba(47,107,255,.04);border-radius:8px;padding:8px 10px">
+          📖 所有数据部分均为<strong>在线浏览</strong>，输入口令即可查看。<br>
+          📥 文件部分可<strong>下载</strong>，输入口令即可下载。
+        </p>
+      </div>
+      <button id="genBtn" onclick="generateAccount()" style="width:100%;padding:12px;border:none;border-radius:12px;background:linear-gradient(135deg,#2F6BFF,#4A82FF);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s">🎯 生成我的体验账号</button>
+      <div id="goLoginWrap" style="display:none;margin-top:12px;text-align:center">
+        <p style="font-size:12px;color:#8FA6BD;margin-bottom:8px">账号已复制，现在就去官网登录 →</p>
+        <a href="https://377701ffcb87465db084556a55110917.app.codebuddy.work" target="_blank" class="survey-link-btn primary" style="width:100%;justify-content:center;padding:12px 0;font-size:14px">🚀 前往官网登录</a>
+        <p style="font-size:11px;color:#8FA6BD;margin-top:8px">登录时选择「内测登录」，输入上方账号密码即可</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="survey-section">
+  <div class="survey-section-title">
+    <span class="num">3</span>
+    <span>访问启点蓝图官网，浏览全貌</span>
+  </div>
+  <div class="survey-step-card">
+    <div class="survey-step-head">
+      <div class="survey-step-icon">🌐</div>
+      <div class="survey-step-title">了解产品定位与核心功能</div>
+    </div>
+    <div class="survey-step-body">
+      <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(47,107,255,.08);color:#2F6BFF;border-radius:100px;font-size:11px;font-weight:600;margin-bottom:10px;letter-spacing:.02em">💻 建议使用 PC 端浏览（手机端适配仍在优化中）</div><br>
+      打开官网，先整体浏览首页内容，了解启点蓝图是什么、解决什么问题。<br>
+      <a href="https://377701ffcb87465db084556a55110917.app.codebuddy.work" class="survey-link-btn secondary" target="_blank" rel="noopener">👉 打开启点蓝图官网</a>
+    </div>
+  </div>
+</section>
+
+<section class="survey-section">
+  <div class="survey-section-title">
+    <span class="num">4</span>
+    <span>探索启动包内容，体验核心功能</span>
+  </div>
+  <div class="survey-step-card">
+    <div class="survey-step-head">
+      <div class="survey-step-icon">🏢</div>
+      <div class="survey-step-title">央企求职启动包</div>
+    </div>
+    <div class="survey-step-body">
+      <strong style="color:#0B2A4A">实时更新：</strong>每日核验招聘动态，基准日期 2026-07-18。<br>
+      <strong style="color:#0B2A4A">覆盖维度：</strong>4,437 家央企单位覆盖、481 个在招岗位、3,702 个一键投递入口、107 家央企集团全量实体覆盖、49 个行业、184+ 城市。<br>
+      <strong style="color:#0B2A4A">解决问题：</strong>从分散的招聘信息中筛选真实机会，提供官方入口核验，7 天启动路径避免从零摸索。
+    </div>
+  </div>
+  <div class="survey-step-card">
+    <div class="survey-step-head">
+      <div class="survey-step-icon">🎓</div>
+      <div class="survey-step-title">考研择校启动包</div>
+    </div>
+    <div class="survey-step-body">
+      <strong style="color:#0B2A4A">实时更新：</strong>近 5 年完整数据，2026 最新招生信息已收录。<br>
+      <strong style="color:#0B2A4A">覆盖维度：</strong>1,287 所高校覆盖、827 所招生院校、15,600+ 专业数据库、52,340 条历年录取数据、3,800+ 录取分数线记录。<br>
+      <strong style="color:#0B2A4A">解决问题：</strong>从海量院校中定位目标，冲稳保三档策略匹配，5 步决策路径降低选择焦虑。
+    </div>
+  </div>
+  <div class="survey-step-card" style="border-color:rgba(47,107,255,.15);background:linear-gradient(135deg,#f8faff,#fff)">
+    <div class="survey-step-head">
+      <div class="survey-step-icon">🤖</div>
+      <div class="survey-step-title">问启点 AI 助手</div>
+    </div>
+    <div class="survey-step-body">
+      点击右下角「问启点」浮窗，对当前启动包内容直接提问。AI 基于当前包的实时数据与隐性案例库为你提供针对性回答。<br>
+      试试：<em style="color:#2F6BFF;font-style:normal;font-weight:600">"我是普通二本，想去西安的央企，我的资历能报哪些央企？"</em><br>
+      也可以点击头部「Copilot Mode」体验全屏对话模式。
+    </div>
+  </div>
+</section>
+
+<section class="survey-section">
+  <div class="survey-section-title">
+    <span class="num">5</span>
+    <span>填写调研问卷</span>
+  </div>
+  <div class="survey-step-card">
+    <div class="survey-step-head">
+      <div class="survey-step-icon">📝</div>
+      <div class="survey-step-title">你的反馈至关重要</div>
+    </div>
+    <div class="survey-step-body">
+      完成以上体验后，请花 5-10 分钟填写内测问卷。你的每一条反馈都将直接影响产品的改进方向。问卷匿名，信息仅用于产品迭代。
+    </div>
+  </div>
+  <div class="survey-cta">
+    <a href="https://v.wjx.cn/vm/eRF74Sf.aspx" class="survey-cta-btn" target="_blank" rel="noopener">
+      📝 开始填写问卷
+    </a>
+    <div class="survey-cta-sub">
+      预计耗时 5-10 分钟 · 问卷匿名 · 感谢你的宝贵时间
+    </div>
+  </div>
+</section>
+
+<section class="survey-section">
+  <div class="survey-section-title">
+    <span class="num">—</span>
+    <span>快速查看：关键信息一页通</span>
+  </div>
+  <div class="survey-summary-grid">
+    <div class="survey-info-card">
+      <div class="survey-info-label">🌐 官网地址</div>
+      <div style="font-size:13px;word-break:break-all;color:#2F6BFF;font-weight:600;margin-top:2px">https://377701ffcb87465db084556a55110917.app.codebuddy.work</div>
+    </div>
+    <div class="survey-info-card">
+      <div class="survey-info-label">🎫 内测账号</div>
+      <div style="font-size:12px;color:#45607A;margin-top:2px">点上方「生成我的体验账号」领取，密码统一 <strong>123456</strong></div>
+    </div>
+    <div class="survey-info-card">
+      <div class="survey-info-label">🔐 下载口令</div>
+      <div class="survey-info-row"><span class="survey-info-key">口令</span><span class="survey-info-val code">888888</span></div>
+    </div>
+    <div class="survey-info-card">
+      <div class="survey-info-label">📝 内测问卷</div>
+      <div style="margin-top:6px">
+        <a href="https://v.wjx.cn/vm/eRF74Sf.aspx" class="survey-link-btn primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">📝 开始填写问卷</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="survey-footer">
+  <p>启点蓝图 · 把重要目标，变成可以开始的行动路径</p>
+  <p style="margin-top:4px">本页面仅用于内测调研，问卷数据仅用于产品迭代，不涉及个人隐私收集。</p>
+</footer>
+
+<!-- 回到顶部按钮 -->
+<div id="backToTop" style="position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2F6BFF,#4A82FF);color:#fff;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(47,107,255,.3);z-index:999;font-size:18px;transition:opacity .3s" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</div>
+
+<!-- 分享按钮（改大 + 文字） -->
+<div style="position:fixed;bottom:28px;right:78px;z-index:999" id="shareBtnWrap">
+  <div onclick="showShareModal()" style="display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:100px;background:linear-gradient(135deg,#059669,#10b981);color:#fff;cursor:pointer;box-shadow:0 6px 20px rgba(5,150,105,.35);font-size:15px;font-weight:600;transition:all .25s;letter-spacing:.02em;user-select:none" 
+       onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(5,150,105,.5)'" 
+       onmouseleave="this.style.transform='translateY(0)';this.style.boxShadow='0 6px 20px rgba(5,150,105,.35)'" 
+       title="分享给好友">
+    <span style="font-size:20px;line-height:1">📤</span>
+    <span>分享</span>
+  </div>
+</div>
+
+<!-- 分享弹窗 -->
+<div style="position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);z-index:9999;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .3s" id="shareOverlay" onclick="if(event.target===this)closeShareModal()">
+  <div style="background:#fff;border-radius:24px;max-width:380px;width:92%;padding:0;box-shadow:0 24px 80px rgba(0,0,0,.3);transform:translateY(20px);transition:transform .3s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden" id="shareModal">
+
+    <!-- 顶栏（仅 UI 装饰，不在截图区） -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(135deg,#059669,#10b981);color:#fff">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:18px">📤</span>
+        <span style="font-size:15px;font-weight:700">分享给好友</span>
+      </div>
+      <button onclick="closeShareModal()" style="width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.2);cursor:pointer;font-size:14px;color:#fff;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+
+    <!-- 截图区（=分享海报） -->
+    <div id="sharePoster" style="padding:24px 22px 22px;background:linear-gradient(180deg,#f0f5ff 0%,#fff 100%)">
+      <!-- 品牌 + 标题 -->
+      <div style="text-align:center;margin-bottom:18px">
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;background:linear-gradient(135deg,#2F6BFF,#4A82FF);color:#fff;font-size:12px;font-weight:600;letter-spacing:.05em;margin-bottom:12px;box-shadow:0 3px 10px rgba(47,107,255,.3)">目标启动引擎</div>
+        <div style="font-size:22px;font-weight:800;color:#0B2A4A;line-height:1.35;font-family:'KaiTi','STKaiti',serif">把迷茫，变成今天立刻<br>就能开始的行动</div>
+        <div style="font-size:12px;color:#45607A;margin-top:10px;line-height:1.6">无论求职、考研、留学、创业<br>启点帮你把复杂目标，拆成每天可落地的步骤</div>
+      </div>
+
+      <!-- 数据亮点 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:18px">
+        <div style="background:#fff;border:1px solid #e5eaf2;border-radius:10px;padding:8px 4px;text-align:center">
+          <div style="font-size:16px;font-weight:800;color:#2F6BFF">6,834</div>
+          <div style="font-size:10px;color:#45607A;margin-top:2px">央企单位</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e5eaf2;border-radius:10px;padding:8px 4px;text-align:center">
+          <div style="font-size:16px;font-weight:800;color:#2F6BFF">1,308</div>
+          <div style="font-size:10px;color:#45607A;margin-top:2px">考研院校</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e5eaf2;border-radius:10px;padding:8px 4px;text-align:center">
+          <div style="font-size:16px;font-weight:800;color:#2F6BFF">8,392</div>
+          <div style="font-size:10px;color:#45607A;margin-top:2px">投递入口</div>
+        </div>
+      </div>
+
+      <!-- 二维码 -->
+      <div style="background:#fff;border:2px solid #e5eaf2;border-radius:16px;padding:14px;display:flex;align-items:center;gap:14px">
+        <img id="shareQR" src="" alt="二维码" style="width:130px;height:130px;border-radius:8px;display:block;flex-shrink:0">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;color:#0B2A4A;margin-bottom:6px">📱 长按识别 / 截图扫码</div>
+          <div style="font-size:11px;color:#45607A;line-height:1.7">
+            ① 微信扫一扫<br>
+            ② 或截图后到微信<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;发图给好友
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部品牌 -->
+      <div style="text-align:center;margin-top:16px;font-size:11px;color:#8FA6BD;letter-spacing:.05em">
+        — 启点蓝图 · 内测体验邀请 —
+      </div>
+    </div>
+
+    <!-- 操作区（不在截图里） -->
+    <div style="padding:14px 18px 18px;border-top:1px solid #eef1f5;background:#fff">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <button onclick="copyShareLink()" style="padding:11px;border:1px solid #d1d5db;border-radius:12px;background:#f9fafb;color:#0B2A4A;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">📋 复制链接</button>
+        <button onclick="savePosterImage()" style="padding:11px;border:none;border-radius:12px;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 3px 10px rgba(16,185,129,.25)">📷 保存海报</button>
+      </div>
+      <p style="font-size:10.5px;color:#9ca3af;margin-top:10px;line-height:1.55;text-align:center">
+        💡 微信里建议用「保存海报」后再发图，<br>
+        稳定显示不依赖微信链接缓存
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+const SB_URL='https://qprucplfqurxkqrxcgpp.supabase.co';
+const SB_KEY='sb_publishable_q4sCMrRxa47T6WeKKTs0ig_5ORKCrud';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+
+async function generateAccount(){
+  const btn=document.getElementById('genBtn');
+  btn.disabled=true;btn.textContent='⏳ 生成中…';
+  const {data:found,error}=await sb.from('qdbp_invitees').select('id,username').eq('status','assigned').order('id').limit(1).single();
+  if(error||!found){btn.textContent='😅 暂无可分配账号';return;}
+  await sb.from('qdbp_invitees').update({status:'invited'}).eq('id',found.id);
+  document.getElementById('genResult').style.display='block';
+  document.getElementById('genUsername').textContent=found.username;
+  document.getElementById('goLoginWrap').style.display='block';
+  btn.textContent='✅ 已生成';
+  btn.disabled=false;
+}
+function copyUsername(){
+  const u=document.getElementById('genUsername').textContent;
+  if(!u||u==='—')return;
+  navigator.clipboard.writeText(u).then(function(){
+    const btn=document.getElementById('copyBtn');
+    btn.textContent='✅ 已复制';
+    setTimeout(function(){btn.textContent='📋 复制';},2500);
+  }).catch(function(){alert('复制失败，请手动复制');});
+}
+// 分享弹窗
+var SHARE_URL='https://377701ffcb87465db084556a55110917.app.codebuddy.work/survey.html';
+function showShareModal(){
+  var ov=document.getElementById('shareOverlay');
+  var md=document.getElementById('shareModal');
+  var qr=document.getElementById('shareQR');
+  if(qr)qr.src='https://api.qrserver.com/v1/create-qr-code/?size=240x240&data='+encodeURIComponent(SHARE_URL);
+  if(ov){ov.style.display='flex';setTimeout(function(){ov.style.opacity='1';if(md)md.style.transform='translateY(0)';},20);}
+}
+function closeShareModal(){
+  var ov=document.getElementById('shareOverlay');
+  var md=document.getElementById('shareModal');
+  ov.style.opacity='0';if(md)md.style.transform='translateY(20px)';
+  setTimeout(function(){ov.style.display='none';},300);
+}
+function copyShareLink(){
+  navigator.clipboard.writeText(SHARE_URL).then(function(){
+    var btns=document.querySelectorAll('#shareModal button');
+    btns.forEach(function(b){if(b.textContent.indexOf('复制')!==-1){b.textContent='✅ 已复制';setTimeout(function(){b.textContent='📋 复制链接';},2000);}});
+  }).catch(function(){alert('复制失败，请手动复制链接');});
+}
+function savePosterImage(){
+  var btn=event.target;
+  var origText=btn.textContent;
+  btn.textContent='⏳ 生成中…';
+  btn.disabled=true;
+  var poster=document.getElementById('sharePoster');
+  if(typeof html2canvas!=='function'){
+    alert('海报生成组件加载中，请稍后再试');
+    btn.textContent=origText;btn.disabled=false;
+    return;
+  }
+  html2canvas(poster,{backgroundColor:'#f0f5ff',scale:2,useCORS:true,logging:false}).then(function(canvas){
+    var link=document.createElement('a');
+    link.download='启点蓝图·内测邀请.png';
+    link.href=canvas.toDataURL('image/png');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    btn.textContent='✅ 已保存到下载';
+    setTimeout(function(){btn.textContent=origText;btn.disabled=false;},2500);
+  }).catch(function(err){
+    console.error(err);
+    btn.textContent=origText;btn.disabled=false;
+    alert('生成失败，请尝试用手机截图功能');
+  });
+}
+// 回到顶部按钮显隐
+(function(){
+  var btn=document.getElementById('backToTop');
+  function toggle(){btn.style.display=window.scrollY>400?'flex':'none';}
+  window.addEventListener('scroll',toggle);
+  toggle();
+})();
+</script>
+</body>
+</html>

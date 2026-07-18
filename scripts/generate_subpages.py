@@ -1,0 +1,396 @@
+#!/usr/bin/env python3
+"""Generate both sub-pages from shared template per spec."""
+
+import os, re
+
+TEMPLATE = '''<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>{{TITLE}} · 启点蓝图</title>
+<meta name="description" content="{{META_DESC}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand-dark:{{DARK}};--brand:{{PRIMARY}};--brand-mid:{{MID}};--brand-light:{{LIGHT}};
+  --brand-soft:{{SOFT}};--brand-fade:{{FADE}};--brand-mist:{{MIST}};
+  --bg:#ffffff;--bg-soft:{{FADE}};--bg-card:#ffffff;
+  --text:#0B2A4A;--text-secondary:#45607A;--text-tertiary:#8FA6BD;
+  --border:rgba(47,107,255,0.08);--border-strong:rgba(47,107,255,0.18);
+  --shadow-sm:0 1px 3px rgba(11,42,74,0.06);--shadow-md:0 4px 16px rgba(11,42,74,0.08);
+  --shadow-lg:0 12px 40px rgba(11,42,74,0.1);
+  --serif:"Noto Serif SC","Source Han Serif SC",serif;
+  --sans:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);font-family:var(--sans)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:20px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--text);flex-shrink:0}
+.nav-brand img{width:28px;height:28px;border-radius:6px}
+.nav-group{display:flex;align-items:center;gap:22px}
+.nav-item{font-size:13px;font-weight:500;color:var(--text-secondary);transition:color .2s ease;cursor:pointer;white-space:nowrap}
+.nav-item:hover,.nav-item.current{color:var(--brand)}
+.nav-dropdown{position:relative;display:inline-flex}
+.nav-dropdown-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;transition:color .2s ease;border:none;background:none;font-family:inherit;padding:0}
+.nav-dropdown-btn:hover{color:var(--brand)}
+.nav-dropdown-btn svg{opacity:.4;transition:transform .2s ease}
+.nav-dropdown.open .nav-dropdown-btn svg{transform:rotate(180deg)}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 10px);right:0;min-width:260px;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:6px;box-shadow:0 12px 40px rgba(11,42,74,.12),0 2px 8px rgba(11,42,74,.04);opacity:0;pointer-events:none;transform:translateY(-6px) scale(.97);transition:all .2s cubic-bezier(.16,1,.3,1);z-index:1000}
+.nav-dropdown.open .nav-dropdown-menu{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.nav-dropdown-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .15s ease;color:var(--text)}
+.nav-dropdown-item:hover{background:var(--bg-soft)}
+.nav-dropdown-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff}
+.nav-dropdown-name{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
+.nav-dropdown-tag{font-size:9px;padding:1px 6px;border-radius:100px;font-weight:600}
+.nav-dropdown-tag.sale{background:rgba(47,107,255,.12);color:var(--brand)}
+.nav-dropdown-tag.wip{background:rgba(245,158,11,.12);color:#d97706}
+.nav-dropdown-desc{font-size:10px;color:var(--text-tertiary);margin-top:1px;line-height:1.4}
+/* HERO */
+.hero{position:relative;padding:80px 28px 60px;background:linear-gradient(180deg,var(--brand-mist) 0%,var(--bg) 100%);overflow:hidden;min-height:0}
+.hero::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--brand) 0%,var(--brand-light) 50%,var(--brand) 100%)}
+.hero::after{content:"";position:absolute;top:15%;right:5%;width:300px;height:300px;background:radial-gradient(circle,rgba(pr1,pr2,pr3,.08),transparent 70%);border-radius:50%;pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+.hero-text{max-width:600px}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--brand-soft);color:var(--brand-dark);border-radius:100px;font-size:11px;font-weight:600;margin-bottom:16px}
+.hero-title{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:14px}
+.hero-title em{font-style:normal;color:var(--brand)}
+.hero-sub{font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:24px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px}
+.hero-btn{display:inline-flex;align-items:center;gap:6px;padding:12px 24px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s ease;border:none;text-decoration:none;font-family:inherit}
+.hero-btn.primary{background:var(--brand);color:#fff;box-shadow:0 6px 20px rgba(PRIMARY_HEX)}
+.hero-btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(PRIMARY_HEX)}
+.hero-btn.secondary{background:transparent;color:var(--text);border:1.5px solid var(--border-strong)}
+.hero-btn.secondary:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-fade)}
+.hero-btn.disabled{opacity:.5;cursor:not-allowed}
+.hero-visual{position:relative;height:300px;display:flex;align-items:center;justify-content:center}
+.hero-circle{width:260px;height:260px;border-radius:50%;background:linear-gradient(135deg,var(--brand-soft),var(--brand-fade));position:relative;display:flex;align-items:center;justify-content:center}
+.hero-circle::before{content:"";position:absolute;inset:-16px;border:1.5px dashed var(--brand-light);border-radius:50%;opacity:.4;animation:rotate 30s linear infinite}
+@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.hero-icon{font-size:100px}
+/* SECTION */
+.section{max-width:1200px;margin:0 auto;padding:60px 28px}
+.section.alt{background:var(--bg-soft)}
+.section-head{text-align:center;margin-bottom:40px}
+.section-head h2{font-family:var(--serif);font-size:clamp(1.4rem,2.8vw,1.9rem);font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin-bottom:10px}
+.section-head p{font-size:14px;color:var(--text-secondary);max-width:640px;margin:0 auto;line-height:1.6}
+/* PROBLEMS */
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.problem-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;align-items:flex-start;gap:12px;transition:all .2s ease}
+.problem-card:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.problem-num{width:24px;height:24px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.problem-text{font-size:13px;color:var(--text);line-height:1.6;flex:1}
+/* PATH */
+.path-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;position:relative}
+.path-steps-5{grid-template-columns:repeat(5,1fr)}
+.path-step{text-align:center;padding:24px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;transition:all .2s ease;position:relative}
+.path-step:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:0 4px 16px rgba(pr1,pr2,pr3,.08)}
+.path-step-num{width:36px;height:36px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto 10px;line-height:1}
+.path-step-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.path-step-desc{font-size:11px;color:var(--text-tertiary);line-height:1.5}
+/* DELIVERABLES */
+.deliv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.deliv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;transition:all .2s ease;display:flex;flex-direction:column;gap:8px}
+.deliv-card:hover{border-color:var(--border-strong);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.deliv-head{display:flex;align-items:flex-start;gap:12px}
+.deliv-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand-soft),var(--brand-fade));display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.deliv-info{flex:1;min-width:0}
+.deliv-title{font-size:14px;font-weight:600;color:var(--text)}
+.deliv-desc{font-size:12px;color:var(--text-secondary);margin-top:2px;line-height:1.6}
+.deliv-meta{font-size:10px;color:var(--text-tertiary);margin-top:4px}
+.deliv-btn{font-size:10px;padding:4px 10px;border:1px solid var(--border);border-radius:100px;color:var(--text-secondary);background:transparent;cursor:default;transition:all .2s ease;align-self:flex-start;margin-top:4px;font-weight:500}
+.deliv-btn.active{background:var(--brand);color:#fff;border-color:var(--brand);cursor:pointer}
+.deliv-btn.active:hover{background:var(--brand-mid)}
+.deliv-btn.disabled{opacity:.5;cursor:not-allowed}
+/* NOTE */
+.note-box{max-width:720px;margin:24px auto 0;background:var(--brand-fade);border:1px solid var(--border);border-radius:14px;padding:14px 18px;font-size:12px;color:var(--text-secondary);line-height:1.6;border-left:3px solid var(--brand)}
+/* FINAL */
+.final{background:linear-gradient(135deg,var(--brand-dark) 0%,var(--brand) 100%);padding:60px 28px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.final-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
+.final h2{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin-bottom:12px}
+.final p{font-size:14px;opacity:.9;margin-bottom:24px;line-height:1.6}
+.final-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.final-btn{display:inline-flex;align-items:center;gap:6px;padding:12px 24px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s ease;border:none;text-decoration:none;font-family:inherit}
+.final-btn.primary{background:#fff;color:var(--brand);box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.final-btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.final-btn.secondary{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.final-btn.secondary:hover{background:rgba(255,255,255,.25)}
+.final-btn.disabled{opacity:.5;cursor:not-allowed}
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding:28px;text-align:center;font-size:12px;color:var(--text-tertiary);background:var(--bg-soft)}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:24px}
+  .hero-visual{height:200px}
+  .hero-circle{width:180px;height:180px}
+  .hero-icon{font-size:72px}
+  .problem-grid{grid-template-columns:1fr}
+  .path-steps{grid-template-columns:1fr 1fr}
+  .path-steps-5{grid-template-columns:repeat(5,1fr)}
+  .deliv-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/images/logo.png" alt="启点蓝图">
+      <span>启点蓝图</span>
+    </a>
+    <div class="nav-group">
+      <a href="index.html" class="nav-item">返回首页</a>
+      <div class="nav-dropdown" id="otherPkg">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown(event)">其他启动包 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-dropdown-menu" id="otherPkgMenu">
+          <a href="zhaopin.html" class="nav-dropdown-item">
+            <div class="nav-dropdown-icon" style="background:linear-gradient(135deg,#E87524,#f59e0b)">🏢</div>
+            <div><div class="nav-dropdown-name">央企求职启动包 <span class="nav-dropdown-tag sale">可售</span></div><div class="nav-dropdown-desc">7 天完成首批投递</div></div>
+          </a>
+          <a href="kaoyan.html" class="nav-dropdown-item">
+            <div class="nav-dropdown-icon" style="background:linear-gradient(135deg,#1F5A45,#34d399)">🎓</div>
+            <div><div class="nav-dropdown-name">考研择校启动包 <span class="nav-dropdown-tag wip">内测中</span></div><div class="nav-dropdown-desc">五阶段择校决策路径</div></div>
+          </a>
+        </div>
+      </div>
+      <a href="javascript:void(0)" class="nav-item" onclick="goToMySpace()">我的启动包</a>
+    </div>
+  </div>
+</nav>
+
+{{HERO_SECTION}}
+
+{{PROBLEM_SECTION}}
+
+{{PATH_SECTION}}
+
+{{DELIV_SECTION}}
+
+{{NOTE_SECTION}}
+
+{{FINAL_SECTION}}
+
+<footer class="footer">
+  <p>© 2026 启点蓝图 · 把重要目标变成可以开始的行动路径</p>
+</footer>
+
+<script>
+function toggleDropdown(e){e&&e.stopPropagation();document.getElementById('otherPkg').classList.toggle('open')}
+document.addEventListener('click',function(){var d=document.getElementById('otherPkg');if(d)d.classList.remove('open')});
+function goToMySpace(){if(window.isLoggedIn&&isLoggedIn()){openWorkspace()}else{showLoginModal&&showLoginModal()}}
+{{EXTRA_JS}}
+</script>
+</body>
+</html>
+'''
+
+def make_hex(hex_color):
+  """Convert hex to rgba components"""
+  h = hex_color.lstrip('#')
+  return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+
+# ======================
+# ZHAOPIN (央企 - Orange)
+# ======================
+zhaopin_data = {
+  'TITLE': '大学生央企求职启动包',
+  'META_DESC': '帮助第一次准备央企求职的大学生，在7天内看懂路径、筛选真实机会、准备材料并完成首批投递。',
+  'PRIMARY': '#E87524',
+  'DARK': '#9A4312',
+  'MID': '#f59e0b',
+  'LIGHT': '#fbbf24',
+  'SOFT': '#FFF4E8',
+  'FADE': '#FFF8F0',
+  'MIST': '#FFFBF5',
+}
+
+r, g, b = make_hex('#E87524')
+rgba_str = f'{r},{g},{b}'
+
+zhaopin_html = TEMPLATE.replace('{{TITLE}}', zhaopin_data['TITLE'])
+zhaopin_html = zhaopin_html.replace('{{META_DESC}}', zhaopin_data['META_DESC'])
+for k, v in zhaopin_data.items():
+  zhaopin_html = zhaopin_html.replace('{{'+k+'}}', v)
+zhaopin_html = zhaopin_html.replace('pr1', str(r)).replace('pr2', str(g)).replace('pr3', str(b))
+zhaopin_html = zhaopin_html.replace('PRIMARY_HEX', rgba_str + ',.25)')
+
+zhaopin_html = zhaopin_html.replace('{{HERO_SECTION}}', '''<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag">可售测试版</div>
+      <h1 class="hero-title">第一次准备央企求职，<br><em>不再从零开始</em>。</h1>
+      <p class="hero-sub">帮助第一次准备央企求职的大学生，在 7 天内看懂路径、筛选真实机会、准备材料并完成首批投递。</p>
+      <div class="hero-actions">
+        <a href="javascript:void(0)" class="hero-btn primary" onclick="goToMySpace()">进入我的启动包</a>
+        <a href="javascript:void(0)" class="hero-btn secondary" onclick="goToMySpace()">下载完整启动包</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-circle"></div>
+      <div class="hero-icon">🏢</div>
+    </div>
+  </div>
+</section>''')
+
+zhaopin_html = zhaopin_html.replace('{{PROBLEM_SECTION}}', '''<section class="section alt" id="problems">
+  <div class="section-head">
+    <h2>央企求职真正难的，不只是找到招聘信息。</h2>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-card"><span class="problem-num">1</span><span class="problem-text">不知道从哪些单位和岗位开始筛选</span></div>
+    <div class="problem-card"><span class="problem-num">2</span><span class="problem-text">招聘信息分散，难以判断是否真实、是否仍可投</span></div>
+    <div class="problem-card"><span class="problem-num">3</span><span class="problem-text">简历、材料和投递节奏没有形成完整准备</span></div>
+  </div>
+</section>''')
+
+zhaopin_html = zhaopin_html.replace('{{PATH_SECTION}}', '''<section class="section" id="path">
+  <div class="section-head">
+    <h2>用四步完成央企求职启动。</h2>
+  </div>
+  <div class="path-steps">
+    <div class="path-step"><div class="path-step-num">1</div><div class="path-step-title">看懂求职路径</div><div class="path-step-desc">了解招聘节奏和岗位类型</div></div>
+    <div class="path-step"><div class="path-step-num">2</div><div class="path-step-title">筛选真实机会</div><div class="path-step-desc">对照数据快照筛选可投岗位</div></div>
+    <div class="path-step"><div class="path-step-num">3</div><div class="path-step-title">准备投递材料</div><div class="path-step-desc">简历模板、写作示例、材料清单</div></div>
+    <div class="path-step"><div class="path-step-num">4</div><div class="path-step-title">完成首批投递</div><div class="path-step-desc">执行表管理投递进度</div></div>
+  </div>
+</section>''')
+
+zhaopin_html = zhaopin_html.replace('{{DELIV_SECTION}}', '''<section class="section alt" id="deliverables">
+  <div class="section-head">
+    <h2>一个入口，五类核心交付。</h2>
+  </div>
+  <div class="deliv-grid">
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">📖</div><div class="deliv-info"><div class="deliv-title">从这里开始</div><div class="deliv-desc">说明产品边界、使用顺序和第一步该做什么。</div><div class="deliv-meta">PDF · 说明指南</div></div></div></div>
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">🧭</div><div class="deliv-info"><div class="deliv-title">央企求职启动指南</div><div class="deliv-desc">7 天路径、岗位选择和失败恢复策略。</div><div class="deliv-meta">PDF · 行动全流程</div></div></div></div>
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">📊</div><div class="deliv-info"><div class="deliv-title">校招信息表</div><div class="deliv-desc">2026-07-14 离线数据快照，涵盖电力、能源、通信等 200+ 央企岗位。</div><div class="deliv-meta">XLSX · 离线快照</div></div></div></div>
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">📋</div><div class="deliv-info"><div class="deliv-title">央企求职执行表</div><div class="deliv-desc">记录机会、岗位证据、材料和投递状态，跟踪每次投递。</div><div class="deliv-meta">XLSX · 执行跟踪</div></div></div></div>
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">📄</div><div class="deliv-info"><div class="deliv-title">投递资料与模板</div><div class="deliv-desc">通用简历母版、三种简历样式（稳重蓝/墨绿/暖灰）、写作示例、材料清单和 AI 辅助提示词。</div><div class="deliv-meta">DOCX · 多套模板</div></div></div></div>
+  </div>
+</section>''')
+
+zhaopin_html = zhaopin_html.replace('{{NOTE_SECTION}}', '''<section class="section">
+  <div class="note-box">📌 当前招聘信息为 2026-07-14 离线快照，不代表今天仍然有效。用户投递前必须回到企业官方公告或招聘系统核验。</div>
+</section>''')
+
+zhaopin_html = zhaopin_html.replace('{{FINAL_SECTION}}', '''<section class="final">
+  <div class="final-inner">
+    <h2>准备好第一批投递，<br>从这里开始。</h2>
+    <p>7 天看懂路径、筛选机会、准备材料并完成首批投递。</p>
+    <div class="final-actions">
+      <a href="javascript:void(0)" class="final-btn primary" onclick="goToMySpace()">进入我的启动包</a>
+      <a href="javascript:void(0)" class="final-btn secondary" onclick="goToMySpace()">下载完整启动包</a>
+    </div>
+  </div>
+</section>''')
+
+zhaopin_html = zhaopin_html.replace('{{EXTRA_JS}}', '')
+
+with open('/Users/jesson/WorkBuddy/2026-07-16-13-40-21/zhaopin.html', 'w', encoding='utf-8') as f:
+  f.write(zhaopin_html)
+print("✅ zhaopin.html generated")
+
+# ======================
+# KAOYAN (考研 - Forest Green)
+# ======================
+kaoyan_data = {
+  'TITLE': '大学生考研择校启动包',
+  'META_DESC': '从自我定位、院校筛选到最终报考，用五个阶段帮助考生建立清晰的择校决策路径。',
+  'PRIMARY': '#1F5A45',
+  'DARK': '#123D2F',
+  'MID': '#2d7a5e',
+  'LIGHT': '#34d399',
+  'SOFT': '#EAF4EF',
+  'FADE': '#F0F8F4',
+  'MIST': '#F4FAF7',
+}
+
+r2, g2, b2 = make_hex('#1F5A45')
+rgba_str2 = f'{r2},{g2},{b2}'
+
+kaoyan_html = TEMPLATE.replace('{{TITLE}}', kaoyan_data['TITLE'])
+kaoyan_html = kaoyan_html.replace('{{META_DESC}}', kaoyan_data['META_DESC'])
+for k, v in kaoyan_data.items():
+  kaoyan_html = kaoyan_html.replace('{{'+k+'}}', v)
+kaoyan_html = kaoyan_html.replace('pr1', str(r2)).replace('pr2', str(g2)).replace('pr3', str(b2))
+kaoyan_html = kaoyan_html.replace('PRIMARY_HEX', rgba_str2 + ',.25)')
+
+kaoyan_html = kaoyan_html.replace('{{HERO_SECTION}}', '''<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag">修订内测中</div>
+      <h1 class="hero-title">把复杂的择校过程，<br><em>变成清晰的决策路径</em>。</h1>
+      <p class="hero-sub">从自我定位、院校筛选到最终报考，用五个阶段帮助你看清应该判断什么、准备什么和下一步做什么。</p>
+      <div class="hero-actions">
+        <a href="#path" class="hero-btn primary">查看五阶段路径</a>
+        <span class="hero-btn secondary disabled">即将开放</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-circle"></div>
+      <div class="hero-icon">🎓</div>
+    </div>
+  </div>
+</section>''')
+
+kaoyan_html = kaoyan_html.replace('{{PROBLEM_SECTION}}', '''<section class="section alt" id="problems">
+  <div class="section-head">
+    <h2>择校困难，不是因为没有信息，而是缺少判断顺序。</h2>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-card"><span class="problem-num">1</span><span class="problem-text">不了解自己的背景和报考边界</span></div>
+    <div class="problem-card"><span class="problem-num">2</span><span class="problem-text">院校和专业信息太多，无法快速建立候选池</span></div>
+    <div class="problem-card"><span class="problem-num">3</span><span class="problem-text">招生简章、考试科目和报考规则分散，最终难以下决定</span></div>
+  </div>
+</section>''')
+
+kaoyan_html = kaoyan_html.replace('{{PATH_SECTION}}', '''<section class="section" id="path">
+  <div class="section-head">
+    <h2>从迷茫到报考，按五个阶段完成判断。</h2>
+  </div>
+  <div class="path-steps path-steps-5">
+    <div class="path-step"><div class="path-step-num">1</div><div class="path-step-title">了解全局</div><div class="path-step-desc">建立整体认知</div></div>
+    <div class="path-step"><div class="path-step-num">2</div><div class="path-step-title">自我定位</div><div class="path-step-desc">评估实力与边界</div></div>
+    <div class="path-step"><div class="path-step-num">3</div><div class="path-step-title">院校筛选</div><div class="path-step-desc">建立候选池</div></div>
+    <div class="path-step"><div class="path-step-num">4</div><div class="path-step-title">数据分析</div><div class="path-step-desc">量化冲稳保</div></div>
+    <div class="path-step"><div class="path-step-num">5</div><div class="path-step-title">决策报考</div><div class="path-step-desc">完成最终决策</div></div>
+  </div>
+</section>''')
+
+kaoyan_html = kaoyan_html.replace('{{DELIV_SECTION}}', '''<section class="section alt" id="deliverables">
+  <div class="section-head">
+    <h2>五阶段路径与配套工具。</h2>
+  </div>
+  <div class="deliv-grid">
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">🧭</div><div class="deliv-info"><div class="deliv-title">全局导航</div><div class="deliv-desc">从这里开始、考研择校全流程导航。</div><div class="deliv-meta">2 份 · PDF</div></div></div></div>
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">🎯</div><div class="deliv-info"><div class="deliv-title">自我定位</div><div class="deliv-desc">自我定位行动卡、个人背景自评表。</div><div class="deliv-meta">2 份 · PDF</div></div></div></div>
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">🔍</div><div class="deliv-info"><div class="deliv-title">院校筛选</div><div class="deliv-desc">院校初筛行动卡、院校对比与淘汰记录表、择校信息入口表。</div><div class="deliv-meta">3 份 · PDF + XLSX</div></div></div></div>
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">📊</div><div class="deliv-info"><div class="deliv-title">数据分析</div><div class="deliv-desc">数据量化行动卡、冲稳保决策表、全流程执行表、AI 辅助提示词。</div><div class="deliv-meta">4 份 · PDF + XLSX</div></div></div></div>
+    <div class="deliv-card"><div class="deliv-head"><div class="deliv-icon">✅</div><div class="deliv-info"><div class="deliv-title">决策报考</div><div class="deliv-desc">简章核验行动卡、考试科目对照表、报考决策行动卡。</div><div class="deliv-meta">3 份 · PDF</div></div></div></div>
+  </div>
+</section>''')
+
+kaoyan_html = kaoyan_html.replace('{{NOTE_SECTION}}', '''<section class="section">
+  <div class="note-box">📌 当前版本正在进行数据、链接、规则和公式核验，通过发布验收后再开放下载。</div>
+</section>''')
+
+kaoyan_html = kaoyan_html.replace('{{FINAL_SECTION}}', '''<section class="final">
+  <div class="final-inner">
+    <h2>考研择校启动包正在完成最后修订。</h2>
+    <p>从自我定位到最终报考，五个阶段帮你建立清晰的择校决策路径。</p>
+    <div class="final-actions">
+      <span class="final-btn primary disabled">即将开放</span>
+    </div>
+  </div>
+</section>''')
+
+kaoyan_html = kaoyan_html.replace('{{EXTRA_JS}}', '')
+
+with open('/Users/jesson/WorkBuddy/2026-07-16-13-40-21/kaoyan.html', 'w', encoding='utf-8') as f:
+  f.write(kaoyan_html)
+print("✅ kaoyan.html generated")

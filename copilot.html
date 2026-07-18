@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>启点蓝图 · Copilot 副驾驶</title>
+<link rel="icon" href="assets/images/logo.png" type="image/png">
+<style>
+:root{
+  --brand:#2F6BFF;--brand-mid:#4A82FF;--brand-dark:#0B2A4A;--brand-light:#7BA1FF;
+  --brand-soft:#EBF0FF;--brand-fade:#F3F7FF;--brand-mist:#F8FAFF;
+  --bg:#ffffff;--bg-soft:#F3F7FF;--bg-card:#ffffff;--bg-page:#F7F8FA;
+  --text:#0B2A4A;--text-secondary:#45607A;--text-tertiary:#8FA6BD;
+  --border:#E5EAF2;--border-strong:#CCD7E4;
+  --green:#22c55e;--orange:#F59E0B;--red:#dc2626;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;background:var(--bg-page);color:var(--text);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+
+/* App shell */
+.cop-app{display:flex;height:100vh;width:100vw;background:var(--bg-page)}
+
+/* ════ Left sidebar ════ */
+.cop-side{width:240px;background:var(--bg-card);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+.cop-side-head{padding:16px 16px 12px;border-bottom:1px solid var(--border)}
+.cop-logo{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--text);text-decoration:none}
+.cop-logo-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand-mid));color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;box-shadow:0 2px 6px rgba(47,107,255,.25)}
+.cop-mode-tag{margin-top:10px;font-size:10px;background:var(--brand-soft);color:var(--brand);padding:4px 9px;border-radius:6px;display:inline-block;font-weight:600;letter-spacing:.02em}
+.cop-side-body{flex:1;overflow-y:auto;padding:8px 8px 16px}
+.cop-side-body::-webkit-scrollbar{width:5px}
+.cop-side-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.cop-side-section{padding:4px 0}
+.cop-side-section-title{font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;padding:10px 10px 6px}
+.cop-side-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:all .15s ease;font-size:13px;color:var(--text);text-decoration:none;line-height:1.3}
+.cop-side-item:hover{background:var(--bg-soft);color:var(--text)}
+.cop-side-item.active{background:var(--brand-soft);color:var(--brand);font-weight:600}
+.cop-side-item .ico{font-size:15px;width:18px;text-align:center;flex-shrink:0}
+.cop-side-item .label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cop-side-item .kbd{margin-left:auto;font-size:10px;color:var(--text-tertiary);background:var(--bg-soft);padding:1px 6px;border-radius:4px}
+.cop-side-foot{padding:12px;border-top:1px solid var(--border);font-size:11px;color:var(--text-tertiary);display:flex;align-items:center;justify-content:space-between}
+
+/* ════ Center main ════ */
+.cop-main{flex:1;display:flex;flex-direction:column;background:var(--bg-page);overflow:hidden;min-width:0}
+.cop-top{height:64px;background:var(--bg-card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0;gap:16px}
+.cop-top-title{text-align:center;flex:1;min-width:0}
+.cop-top-title h1{font-size:15px;font-weight:600;color:var(--text);margin:0;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cop-top-title p{font-size:11px;color:var(--text-tertiary);margin:3px 0 0;line-height:1.3}
+.cop-top-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.cop-btn{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s ease;border:1px solid var(--border);background:var(--bg-card);color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:6px;line-height:1}
+.cop-btn:hover{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);transform:translateY(-1px)}
+.cop-btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.cop-btn.primary:hover{background:var(--brand-mid);color:#fff;box-shadow:0 4px 12px rgba(47,107,255,.25)}
+
+.cop-center{flex:1;display:flex;flex-direction:column;overflow:hidden;max-width:880px;width:100%;margin:0 auto;padding:0 32px}
+.cop-stage{flex:1;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;padding:24px 0 16px;scroll-behavior:smooth}
+.cop-stage.has-messages{justify-content:flex-start;padding-top:24px}
+.cop-stage::-webkit-scrollbar{width:5px}
+.cop-stage::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.cop-welcome{text-align:center;padding:24px 0}
+.cop-welcome h2{font-size:30px;font-weight:700;color:var(--text);margin:0 0 10px;background:linear-gradient(135deg,var(--brand),var(--brand-mid));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.01em}
+.cop-welcome p{font-size:14px;color:var(--text-tertiary);margin:0 0 32px;line-height:1.5}
+.cop-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:780px;margin:0 auto}
+.cop-chip{padding:12px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;font-size:12.5px;color:var(--text-secondary);cursor:pointer;transition:all .2s ease;line-height:1.5;text-align:left;font-family:inherit}
+.cop-chip:hover{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);transform:translateY(-2px);box-shadow:0 4px 12px rgba(47,107,255,.12)}
+
+.cop-messages{display:flex;flex-direction:column;gap:18px;padding:8px 0 8px}
+.cop-msg{display:flex;gap:12px;animation:copMsgIn .25s ease both;max-width:88%}
+.cop-msg.user{align-self:flex-end;flex-direction:row-reverse}
+.cop-msg-avatar{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0;background:linear-gradient(135deg,var(--brand),var(--brand-mid));color:#fff}
+.cop-msg.bot .cop-msg-avatar{background:linear-gradient(135deg,var(--brand-soft),var(--brand-fade));color:var(--brand);border:1px solid var(--border)}
+.cop-msg-bubble{padding:12px 16px;border-radius:14px;font-size:13.5px;line-height:1.7;word-wrap:break-word;white-space:pre-wrap}
+.cop-msg.user .cop-msg-bubble{background:linear-gradient(135deg,var(--brand),var(--brand-mid));color:#fff;border-bottom-right-radius:4px;box-shadow:0 2px 8px rgba(47,107,255,.18)}
+.cop-msg.bot .cop-msg-bubble{background:var(--bg-card);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px}
+@keyframes copMsgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ════ Input area ════ */
+.cop-input-area{padding:10px 0 20px;flex-shrink:0}
+.cop-input-wrap{background:var(--bg-card);border:1.5px solid var(--border-strong);border-radius:18px;padding:6px 6px 6px 14px;box-shadow:0 4px 18px rgba(11,42,74,.06);transition:all .2s ease}
+.cop-input-wrap:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft),0 4px 18px rgba(47,107,255,.1)}
+.cop-tools{display:flex;align-items:center;gap:2px;padding:4px 0;flex-wrap:wrap;max-height:36px;overflow:hidden}
+.cop-tool{height:28px;min-width:28px;padding:0 6px;border-radius:7px;border:none;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:all .15s ease;font-size:14px;gap:4px}
+.cop-tool:hover{background:var(--brand-soft);color:var(--brand)}
+.cop-tool.more{padding:0 10px;width:auto;font-size:12px;font-weight:500;color:var(--text-tertiary)}
+.cop-input-row{display:flex;align-items:flex-end;gap:8px;padding:4px 0}
+.cop-input{flex:1;border:none;outline:none;background:transparent;padding:8px 4px;font-size:14px;color:var(--text);font-family:inherit;resize:none;max-height:140px;line-height:1.5;min-height:24px}
+.cop-input::placeholder{color:var(--text-tertiary)}
+.cop-send{width:36px;height:36px;border-radius:50%;background:var(--brand);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s ease}
+.cop-send:hover{background:var(--brand-mid);transform:scale(1.05)}
+.cop-send:disabled{background:var(--border-strong);cursor:not-allowed;transform:none}
+.cop-bottom-row{display:flex;align-items:center;justify-content:space-between;padding:6px 4px 0;font-size:11px;color:var(--text-tertiary);gap:8px}
+.cop-model-select{padding:4px 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg-card);font-size:11px;color:var(--text-secondary);cursor:pointer;font-family:inherit}
+.cop-model-select:focus{outline:none;border-color:var(--brand)}
+
+/* ════ Right sidebar ════ */
+.cop-right{width:320px;background:var(--bg-card);border-left:1px solid var(--border);flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column}
+.cop-right-head{padding:18px 20px 12px;border-bottom:1px solid var(--border)}
+.cop-right-head h3{font-size:15px;font-weight:700;color:var(--text);margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.cop-right-head p{font-size:11px;color:var(--text-tertiary);margin:0;line-height:1.5}
+.cop-tasks{padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+.cop-task{display:flex;align-items:flex-start;gap:12px;padding:13px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s ease;background:var(--bg-card)}
+.cop-task:hover{border-color:var(--brand);background:var(--brand-soft);transform:translateY(-1px);box-shadow:0 4px 12px rgba(47,107,255,.1)}
+.cop-task-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand-soft),var(--brand-fade));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cop-task-info{flex:1;min-width:0}
+.cop-task-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.cop-task-desc{font-size:11px;color:var(--text-tertiary);line-height:1.4}
+.cop-right-foot{padding:14px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--text-tertiary);text-align:center;line-height:1.5}
+
+/* ════ Toast ════ */
+.cop-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:#fff;padding:10px 22px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:all .3s ease;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:80vw;text-align:center}
+.cop-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ════ Responsive ════ */
+@media (max-width:1180px){
+  .cop-right{width:280px}
+  .cop-chips{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:980px){
+  .cop-right{display:none}
+}
+@media (max-width:720px){
+  .cop-side{width:60px}
+  .cop-side .cop-logo-text,.cop-mode-tag,.cop-side-item .label,.cop-side-item .kbd,.cop-side-section-title,.cop-side-foot span{display:none}
+  .cop-side-item{justify-content:center;padding:10px 0}
+  .cop-center{padding:0 16px}
+  .cop-chips{grid-template-columns:1fr}
+}
+</style>
+<script src="https://beacon.cdn.qq.com/sdk/4.5.9/beacon_web.min.js"></script>
+<script>
+(function(){
+  try{
+    var beacon=new BeaconAction({
+      appkey:'0WEB06U85YBSLJNL',
+      versionCode:'1.0.0',
+      channelID:'share',
+      delay:1000,
+      sessionDuration:30*60*1000,
+      isOversea:false,
+      needReportRqdEvent:false
+    });
+    beacon.onDirectUserAction('preview_page_view',{
+      'url':location.href,
+      'referrer':document.referrer,
+      'title':document.title,
+      'sandbox_id':'bb320abbd7e444729e0451e3ef00ce0b'
+    });
+  }catch(e){}
+})();
+</script></head>
+<body>
+<div class="cop-app">
+  <!-- ════ Left sidebar ════ -->
+  <aside class="cop-side">
+    <div class="cop-side-head">
+      <a href="./index.html" class="cop-logo" onclick="return true">
+        <div class="cop-logo-icon">✦</div>
+        <span class="cop-logo-text">启点蓝图</span>
+      </a>
+      <span class="cop-mode-tag">⚡ Copilot Mode</span>
+    </div>
+    <div class="cop-side-body" id="copSideBody"></div>
+    <div class="cop-side-foot">
+      <span>关于启点蓝图</span>
+      <span>v1.0</span>
+    </div>
+  </aside>
+
+  <!-- ════ Center main ════ -->
+  <main class="cop-main">
+    <header class="cop-top">
+      <div style="width:1px;flex-shrink:0"></div>
+      <div class="cop-top-title">
+        <h1 id="copTopTitle">新对话</h1>
+        <p>AI 生成内容有误 注重核实</p>
+      </div>
+      <div class="cop-top-actions">
+        <a href="./index.html" class="cop-btn" title="返回首页">🏠 回到首页</a>
+        <a href="javascript:void(0)" id="copGoWorkspaceBtn" class="cop-btn primary">👤 我的蓝图</a>
+      </div>
+    </header>
+
+    <div class="cop-center">
+      <div class="cop-stage" id="copStage">
+        <div class="cop-welcome" id="copWelcome">
+          <h2>有什么我能帮你的吗？</h2>
+          <p>我是你的启点蓝图 Copilot 助手。基于当前启动包数据回答你的问题。</p>
+          <div class="cop-chips" id="copChips"></div>
+        </div>
+        <div class="cop-messages" id="copMessages" style="display:none"></div>
+      </div>
+
+      <div class="cop-input-area">
+        <div class="cop-input-wrap">
+          <div class="cop-tools" id="copTools">
+            <button class="cop-tool" data-tool="更多">➕</button>
+            <button class="cop-tool" data-tool="快速搜索">🔍</button>
+            <button class="cop-tool" data-tool="PPT 生成">📊</button>
+            <button class="cop-tool" data-tool="简历优化">📄</button>
+            <button class="cop-tool" data-tool="岗位推荐">🏢</button>
+            <button class="cop-tool" data-tool="资料库">📚</button>
+            <button class="cop-tool" data-tool="面试题库">🎤</button>
+            <button class="cop-tool" data-tool="翻译">🌐</button>
+            <button class="cop-tool" data-tool="录音转写">🎙️</button>
+            <button class="cop-tool more" data-tool="更多">更多</button>
+          </div>
+          <div class="cop-input-row">
+            <textarea class="cop-input" id="copInput" rows="1" placeholder="说消息…  Shift+Enter 换行" onkeydown="copKeydown(event)"></textarea>
+            <button class="cop-send" id="copSendBtn" onclick="copSend()" title="发送">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </button>
+          </div>
+          <div class="cop-bottom-row">
+            <select class="cop-model-select" id="copModelSelect">
+              <option value="deepseek">DeepSeek · 启点专属</option>
+              <option value="claude" disabled>Claude 3.5 · 即将开放</option>
+              <option value="gpt4" disabled>GPT-4o · 即将开放</option>
+            </select>
+            <span id="copStatus">基于当前启动包 · RAG 已启用</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ════ Right sidebar ════ -->
+  <aside class="cop-right">
+    <div class="cop-right-head">
+      <h3>🛠️ 启点助手</h3>
+      <p>让 AI 帮你完成关键任务（功能陆续上线）</p>
+    </div>
+    <div class="cop-tasks" id="copTasks"></div>
+    <div class="cop-right-foot">更多功能即将上线 ✨</div>
+  </aside>
+</div>
+
+<div class="cop-toast" id="copToast"></div>
+
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ════ Supabase init ════
+const SUPABASE_URL='https://qprucplfqurxkqrxcgpp.supabase.co';
+const SUPABASE_KEY='sb_publishable_q4sCMrRxa47T6WeKKTs0ig_5ORKCrud';
+let supabaseClient=null;
+let sbReady=false;
+try{
+  if(typeof window.supabase!=='undefined'&&window.supabase.createClient){
+    supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+    sbReady=true;
+  }
+}catch(e){}
+
+// ════ Local state helpers ════
+function getStoredUser(){try{return JSON.parse(localStorage.getItem('qdbp_user')||'null')}catch(e){return null}}
+function isLoggedIn(){return !!getStoredUser()}
+function getCurrentPkgId(){return localStorage.getItem('qdbp_pkg')||'kaoyan'}
+
+// ════ Copilot 上下文（精简版，供 ask-qidian 使用） ════
+const COPILOT_CONTEXT={
+  kaoyan:{
+    name:'考研择校启动包',
+    desc:'从自我定位到最终报考的五阶段使用路径',
+    icon:'🎓',
+    stages:[
+      {name:'阶段1：从这里开始',desc:'了解使用方式'},
+      {name:'阶段2：自我定位与边界',desc:'明确目标与底线'},
+      {name:'阶段3：院校筛选与候选池',desc:'建立候选院校池'},
+      {name:'阶段4：数据量化与冲稳保',desc:'三档策略匹配'},
+      {name:'阶段5：招生简章核验与报考',desc:'最终核验与网报'}
+    ],
+    files:[
+      '00｜从这里开始.pdf','01｜考研择校全流程导航.pdf','02｜考研择校决策数据库.xlsx',
+      '03｜考研择校全流程执行表.xlsx','04-01｜自我定位与边界设定行动卡.pdf',
+      '04-02｜院校初筛与候选池建立行动卡.pdf','04-03｜数据量化与冲稳保匹配行动卡.pdf',
+      '04-04｜招生简章核验与考试科目确认行动卡.pdf','04-05｜报考决策与网报准备行动卡.pdf',
+      '05-01｜个人背景自评表模板.pdf','05-02｜院校对比与淘汰记录表模板.pdf',
+      '05-03｜冲稳保三档决策表模板.pdf','05-04｜AI辅助提示词.pdf',
+      '05-05｜考试科目与简章关键信息对照表模板.pdf','06-1｜版权与使用限制说明.pdf'
+    ]
+  },
+  zhaopin:{
+    name:'央企求职启动包',
+    desc:'7天看懂路径、筛选机会、准备材料并完成首批投递',
+    icon:'🏢',
+    stages:[
+      {name:'阶段1：招聘信息与岗位筛选',desc:'看懂招聘流程'},
+      {name:'阶段2：简历与网申',desc:'完成首批投递'},
+      {name:'阶段3：笔试准备',desc:'针对性复习'},
+      {name:'阶段4：面试准备',desc:'结构化与半结构化'},
+      {name:'阶段5：政审与体检',desc:'Offer前最后一步'},
+      {name:'阶段6：Offer核对与签约',desc:'决策与入职准备'}
+    ],
+    files:[
+      '00｜从这里开始.pdf','01｜央企求职全流程导航.pdf','02｜央企招聘机会表_数据快照_2026-07-17.xlsx',
+      '03｜央企求职全流程执行表.xlsx','04-1｜招聘信息与岗位筛选行动卡.pdf',
+      '04-2｜简历与网申行动卡.pdf','04-3｜笔试准备行动卡.pdf','04-4｜面试准备行动卡.pdf',
+      '04-5｜政审与体检行动卡.pdf','04-6｜Offer核对与签约行动卡.pdf',
+      '05-1｜通用简历母版_可编辑.docx','05-1A｜央企求职简历模板_稳重蓝_可编辑.docx',
+      '05-1B｜央企求职简历模板_墨绿_可编辑.docx','05-1C｜央企求职简历模板_暖灰_可编辑.docx',
+      '05-2｜简历与经历写作示例.pdf','05-3｜投递材料准备清单.pdf','05-4｜AI辅助提示词.pdf'
+    ]
+  }
+};
+function buildCopContext(){
+  var pkgId=getCurrentPkgId();
+  var ctx=COPILOT_CONTEXT[pkgId]||COPILOT_CONTEXT.kaoyan;
+  return {package:ctx.name,steps:ctx.stages,files:ctx.files.map(function(n){return{name:n}})};
+}
+
+// ════ Sidebar / Chips / Tasks / Top 渲染 ════
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function renderCopSide(){
+  var pkgId=getCurrentPkgId();
+  var ctx=COPILOT_CONTEXT[pkgId]||COPILOT_CONTEXT.kaoyan;
+  var html='';
+  // 通用区
+  html+='<div class="cop-side-section">';
+  html+='<a href="javascript:void(0)" class="cop-side-item active" id="copNewChatBtn"><span class="ico">✏️</span><span class="label">新对话</span><span class="kbd">⌘K</span></a>';
+  html+='<a href="javascript:void(0)" class="cop-side-item" data-toast="对话历史即将上线"><span class="ico">💬</span><span class="label">对话历史</span></a>';
+  html+='</div>';
+  // 当前包
+  html+='<div class="cop-side-section">';
+  html+='<div class="cop-side-section-title">当前启动包</div>';
+  html+='<a href="javascript:void(0)" class="cop-side-item" style="font-weight:600;color:var(--brand)"><span class="ico">'+ctx.icon+'</span><span class="label">'+escHtml(ctx.name)+'</span></a>';
+  ctx.stages.forEach(function(s,i){
+    html+='<a href="javascript:void(0)" class="cop-side-item" data-prefill="请帮我整理「'+escHtml(s.name)+'」相关的资料和要点" style="padding-left:28px;font-size:12px"><span class="ico" style="color:var(--brand)">·</span><span class="label">'+escHtml(s.name)+'</span></a>';
+  });
+  html+='</div>';
+  // 我的资产
+  html+='<div class="cop-side-section">';
+  html+='<div class="cop-side-section-title">我的资产</div>';
+  html+='<a href="javascript:void(0)" class="cop-side-item" data-toast="我的启动包功能即将上线"><span class="ico">📦</span><span class="label">我的启动包</span></a>';
+  html+='<a href="javascript:void(0)" class="cop-side-item" data-toast="资料库功能即将上线"><span class="ico">📚</span><span class="label">资料库</span></a>';
+  html+='<a href="javascript:void(0)" class="cop-side-item" data-toast="下载记录即将上线"><span class="ico">⬇️</span><span class="label">下载记录</span></a>';
+  html+='</div>';
+  // 工具
+  html+='<div class="cop-side-section">';
+  html+='<div class="cop-side-section-title">工具</div>';
+  html+='<a href="javascript:void(0)" class="cop-side-item" data-toast="提示词库即将上线"><span class="ico">✨</span><span class="label">提示词库</span></a>';
+  html+='<a href="javascript:void(0)" class="cop-side-item" data-toast="语音输入即将上线"><span class="ico">🎙️</span><span class="label">语音输入</span></a>';
+  html+='<a href="javascript:void(0)" class="cop-side-item" data-toast="设置即将上线"><span class="ico">⚙️</span><span class="label">设置</span></a>';
+  html+='</div>';
+  document.getElementById('copSideBody').innerHTML=html;
+  // 绑定事件
+  var newBtn=document.getElementById('copNewChatBtn');
+  if(newBtn) newBtn.addEventListener('click',function(e){e.preventDefault();copNewChat()});
+  document.querySelectorAll('#copSideBody .cop-side-item').forEach(function(el){
+    if(el.id==='copNewChatBtn')return;
+    el.addEventListener('click',function(e){
+      e.preventDefault();
+      var prefill=el.getAttribute('data-prefill');
+      var toast=el.getAttribute('data-toast');
+      if(prefill){copPrefill(prefill)}
+      else if(toast){copToast(toast+' ✨')}
+    });
+  });
+}
+
+function renderCopChips(){
+  var pkgId=getCurrentPkgId();
+  var chips=pkgId==='zhaopin'?[
+    '央企秋招流程是怎样的？',
+    '西安有哪些可投递的石化类央企？',
+    '帮我优化简历中的自我介绍部分',
+    '笔试主要考什么？怎么准备？',
+    '面试常见问题和回答技巧',
+    '帮我整理一份网申材料清单'
+  ]:[
+    '这个启动包有哪些文件？怎么用？',
+    '帮我制定这周的考研复习计划',
+    '我的分数大概能报什么学校？',
+    '帮我根据择校资料生成一份笔记',
+    '怎么准备复试和面试？',
+    '帮我生成一份简历草稿'
+  ];
+  var html=chips.map(function(t){return '<button class="cop-chip">'+escHtml(t)+'</button>'}).join('');
+  var c=document.getElementById('copChips');
+  c.innerHTML=html;
+  c.querySelectorAll('.cop-chip').forEach(function(el){
+    el.addEventListener('click',function(){
+      document.getElementById('copInput').value=el.textContent;
+      copSend();
+    });
+  });
+}
+
+function renderCopTasks(){
+  var tasks=[
+    {icon:'📄',title:'智能简历优化',desc:'基于你的经历和目标岗位定制化修改'},
+    {icon:'🏢',title:'央企机会匹配',desc:'根据专业和偏好推荐在招央企岗位'},
+    {icon:'🎓',title:'院校专业研究',desc:'深度对比院校/专业历年数据'},
+    {icon:'📋',title:'资料整理助手',desc:'把零散资料整理成可用的笔记'},
+    {icon:'🎤',title:'模拟面试官',desc:'结构化/半结构化模拟面试'},
+    {icon:'📊',title:'进度追踪',desc:'可视化跟踪每个阶段完成度'},
+    {icon:'🗒️',title:'笔记生成',desc:'一键把对话整理成可保存笔记'},
+    {icon:'📅',title:'学习计划',desc:'基于截止日期生成倒排学习计划'}
+  ];
+  var html=tasks.map(function(t){
+    return '<div class="cop-task"><div class="cop-task-icon">'+t.icon+'</div><div class="cop-task-info"><div class="cop-task-title">'+t.title+'</div><div class="cop-task-desc">'+t.desc+'</div></div></div>';
+  }).join('');
+  var c=document.getElementById('copTasks');
+  c.innerHTML=html;
+  c.querySelectorAll('.cop-task').forEach(function(el){
+    el.addEventListener('click',function(){copToast('该功能即将上线，敬请期待 ✨')});
+  });
+}
+
+function renderCopTop(){
+  var pkgId=getCurrentPkgId();
+  var ctx=COPILOT_CONTEXT[pkgId]||COPILOT_CONTEXT.kaoyan;
+  document.getElementById('copTopTitle').textContent='新对话 · '+ctx.name;
+  // 状态栏
+  var status=document.getElementById('copStatus');
+  if(status){
+    var u=getStoredUser();
+    status.textContent=u?('已登录 '+u.name+' · '+ctx.name):('未登录 · '+ctx.name);
+  }
+}
+
+// ════ Toast / Nav ════
+function copToast(msg){
+  var t=document.getElementById('copToast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(function(){t.classList.remove('show')},2200);
+}
+
+// 异步校准登录状态：同时检查 Supabase 会话与 localStorage
+async function copIsLoggedIn(){
+  if(sbReady && supabaseClient){
+    try{
+      const {data:{session}}=await supabaseClient.auth.getSession();
+      if(session) return true;
+    }catch(e){}
+  }
+  return !!getStoredUser();
+}
+async function copGoWorkspace(){
+  if(await copIsLoggedIn()){
+    copToast('正在切换到我的蓝图…');
+    setTimeout(function(){window.location.href='./index.html?ws=1'},200);
+  }else{
+    copToast('请先登录后再进入我的蓝图');
+    setTimeout(function(){window.location.href='./index.html'},1400);
+  }
+}
+
+function copNewChat(){
+  document.getElementById('copMessages').style.display='none';
+  document.getElementById('copMessages').innerHTML='';
+  document.getElementById('copWelcome').style.display='block';
+  document.getElementById('copStage').classList.remove('has-messages');
+  document.getElementById('copInput').value='';
+  copToast('已开启新对话');
+}
+
+function copPrefill(text){
+  var input=document.getElementById('copInput');
+  input.value=text;
+  input.focus();
+  // 自动增高
+  input.style.height='auto';
+  input.style.height=Math.min(input.scrollHeight,140)+'px';
+}
+
+// ════ Chat ════
+function addCopMsg(role,text){
+  var box=document.getElementById('copMessages');
+  var wrap=document.createElement('div');
+  wrap.className='cop-msg '+role;
+  var avatarText=role==='user'?'你':'启';
+  wrap.innerHTML='<div class="cop-msg-avatar">'+avatarText+'</div><div class="cop-msg-bubble"></div>';
+  wrap.querySelector('.cop-msg-bubble').textContent=text;
+  box.appendChild(wrap);
+  var stage=document.getElementById('copStage');
+  stage.scrollTop=stage.scrollHeight;
+  return wrap;
+}
+
+async function copSend(){
+  var input=document.getElementById('copInput');
+  var q=input.value.trim();
+  if(!q)return;
+  input.value='';
+  input.style.height='auto';
+  var welcome=document.getElementById('copWelcome');
+  var msgs=document.getElementById('copMessages');
+  var stage=document.getElementById('copStage');
+  if(welcome)welcome.style.display='none';
+  msgs.style.display='flex';
+  stage.classList.add('has-messages');
+  addCopMsg('user',q);
+  var placeholder=addCopMsg('bot','启点助手正在思考…');
+  if(!sbReady||!supabaseClient||!isLoggedIn()){
+    placeholder.querySelector('.cop-msg-bubble').textContent='请先登录后再使用 Copilot 对话。点右上角"回到首页"登录后再来 ✨';
+    return;
+  }
+  try{
+    var context=buildCopContext();
+    var {data,error}=await supabaseClient.functions.invoke('ask-qidian',{body:{message:q,context:context}});
+    if(error)throw error;
+    if(data&&data.reply){
+      placeholder.querySelector('.cop-msg-bubble').textContent=data.reply;
+    }else if(data&&data.error){
+      placeholder.querySelector('.cop-msg-bubble').textContent='⚠️ '+data.error+'（请确认站长已部署问启点服务并配置 DeepSeek key）';
+    }else{
+      placeholder.querySelector('.cop-msg-bubble').textContent='（未获取到回答）';
+    }
+  }catch(e){
+    var msg='调用失败：'+(e&&e.message?e.message:String(e));
+    if(/Failed to fetch|network|load|404/i.test(msg)) msg='问启点服务尚未部署或网络异常，请稍后重试。';
+    placeholder.querySelector('.cop-msg-bubble').textContent=msg;
+  }finally{
+    stage.scrollTop=stage.scrollHeight;
+  }
+}
+
+function copKeydown(e){
+  if(e.key==='Enter'&&!e.shiftKey){
+    e.preventDefault();
+    copSend();
+  }
+}
+
+// 输入框自动增高
+document.addEventListener('DOMContentLoaded',function(){
+  var input=document.getElementById('copInput');
+  input.addEventListener('input',function(){
+    this.style.height='auto';
+    this.style.height=Math.min(this.scrollHeight,140)+'px';
+  });
+  // 工具按钮 → toast
+  document.querySelectorAll('.cop-tool').forEach(function(b){
+    b.addEventListener('click',function(){
+      copToast('「'+(b.getAttribute('data-tool')||'该工具')+'」功能即将上线 ✨');
+    });
+  });
+  // 「我的蓝图」按钮（async 校准 Supabase 登录）
+  var goWsBtn=document.getElementById('copGoWorkspaceBtn');
+  if(goWsBtn){
+    goWsBtn.addEventListener('click',function(e){
+      e.preventDefault();
+      copGoWorkspace();
+    });
+  }
+  // 全局快捷键 ⌘K 新对话
+  document.addEventListener('keydown',function(e){
+    if((e.metaKey||e.ctrlKey)&&e.key==='k'){
+      e.preventDefault();
+      copNewChat();
+    }
+  });
+  // 首次渲染
+  renderCopSide();
+  renderCopChips();
+  renderCopTasks();
+  renderCopTop();
+  // 异步校准：Supabase 登录状态（修复 localStorage qdbp_user 未写时显示"未登录"）
+  (async function(){
+    if(sbReady && supabaseClient){
+      try{
+        const {data:{session}}=await supabaseClient.auth.getSession();
+        if(session){
+          var pkgId=getCurrentPkgId();
+          var ctx=COPILOT_CONTEXT[pkgId]||COPILOT_CONTEXT.kaoyan;
+          var name=(session.user&&(session.user.user_metadata&&session.user.user_metadata.name))||(session.user&&session.user.email)||'会员';
+          var status=document.getElementById('copStatus');
+          if(status) status.textContent='已登录 '+name+' · '+ctx.name;
+          // 同步到 localStorage 以便 index.html 的 isLoggedIn() 也能快速判断
+          try{
+            if(!localStorage.getItem('qdbp_user')){
+              localStorage.setItem('qdbp_user',JSON.stringify({name:name,email:(session.user&&session.user.email)||''}));
+            }
+          }catch(e){}
+        }
+      }catch(e){}
+    }
+  })();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# 启点蓝图 · 项目根 .gitignore
+
+# WorkBuddy 工作文件
+.workbuddy/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# 部署目录
+deploy/
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 环境变量（敏感信息）
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
