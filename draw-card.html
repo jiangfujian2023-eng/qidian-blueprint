@@ -9,9 +9,9 @@
 body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#f2f4f8;color:#1a1a2e;min-height:100vh;display:flex;align-items:center;justify-content:center}
 .wrap{width:100%;max-width:460px;padding:20px;position:relative}
 .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.top .l{font-size:11px;color:#8e96a8;letter-spacing:.08em;font-weight:600}
-.top .r{font-size:10px;color:#b0b7c4}
-.pg{margin:16px 0;text-align:center}.pg-t{font-size:16px;font-weight:700}.pg-s{font-size:11px;color:#8e96a8;margin-top:4px;line-height:1.5}
+.top .l{font-size:13px;color:#8e96a8;letter-spacing:.08em;font-weight:600}
+.top .r{font-size:12px;color:#b0b7c4}
+.pg{margin:16px 0;text-align:center}.pg-t{font-size:17px;font-weight:700}.pg-s{font-size:13px;color:#8e96a8;margin-top:4px;line-height:1.5}
 /* 卡片通用 */
 .cd{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04);border:1px solid #eef0f4;position:relative;min-height:280px}
 .cd-top{height:100px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e3a5f,#2a4f7a)}
@@ -19,62 +19,73 @@ body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;bac
 .cd-top .lg{font-size:56px;font-weight:800;color:#fff;position:relative;z-index:2;font-family:"STKaiti","Noto Serif SC",serif;letter-spacing:4px;text-shadow:0 2px 8px rgba(0,0,0,.2)}
 .cd-top .badge{position:absolute;top:10px;right:14px;font-size:8px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.1em;z-index:2}
 .cd-body{padding:18px 22px 16px}
-.cd-body .nm{font-size:18px;font-weight:700}.cd-body .ind{font-size:11px;color:#8e96a8;margin-bottom:6px}.cd-body .upd{font-size:10px;color:#b0b7c4;margin-bottom:6px}
+.cd-body .nm{font-size:18px;font-weight:700}.cd-body .ind{font-size:13px;color:#8e96a8;margin-bottom:6px}.cd-body .upd{font-size:12px;color:#b0b7c4;margin-bottom:6px}
 .posts{background:#f7f8fb;border-radius:12px;padding:10px 12px}
-.posts .pt{font-size:10px;color:#b0b7c4;font-weight:500;letter-spacing:.05em;margin-bottom:5px}
+.posts .pt{font-size:12px;color:#b0b7c4;font-weight:500;letter-spacing:.05em;margin-bottom:5px}
 .posts .pl{display:flex;flex-wrap:wrap;gap:4px}
 .posts .pl .i{padding:3px 10px;border-radius:100px;font-size:10.5px;background:#eef2fb;color:#3a5a8c;border:1px solid #e4e9f2;white-space:nowrap}
 .cd-top.bg-ene{background:linear-gradient(135deg,#064e3b,#047857)}.cd-top.bg-tech{background:linear-gradient(135deg,#1e3a8a,#2563eb)}.cd-top.bg-fin{background:linear-gradient(135deg,#78350f,#b45309)}.cd-top.bg-bld{background:linear-gradient(135deg,#78350f,#9a3412)}.cd-top.bg-car{background:linear-gradient(135deg,#7f1d1d,#991b1b)}.cd-top.bg-med{background:linear-gradient(135deg,#701a75,#86198f)}.cd-top.bg-mix{background:linear-gradient(135deg,#4c1d95,#6d28d9)}.cd-top.bg-ship{background:linear-gradient(135deg,#115e59,#0d9488)}
 /* 按钮通用 */
 .btn-row{display:flex;gap:8px;margin-top:14px}
-.btn-row button{flex:1;padding:12px;border-radius:12px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-row button{flex:1;padding:12px;border-radius:12px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
 .btn-sec{background:#f2f4f8;color:#6b7280;border:1px solid #e8ebf0}.btn-sec:hover{background:#e8ebf0;color:#374151}.btn-sec:disabled{opacity:.35;cursor:not-allowed}
 .btn-pri{background:linear-gradient(135deg,#1e3a5f,#2a4f7a);color:#fff;box-shadow:0 4px 12px rgba(30,58,95,.2)}.btn-pri:hover{box-shadow:0 6px 20px rgba(30,58,95,.3)}.btn-pri:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .collect-bar{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px}.collect-bar .st{display:flex;gap:6px}.collect-bar .st .pt{width:7px;height:7px;border-radius:50%;background:#dce0e8}.collect-bar .st .pt.on{background:#2a4f7a}
 /* 卡组 */
-.deck{padding:8px 0}.deck-title{font-size:13px;font-weight:600;text-align:center;margin-bottom:12px}
+.deck{padding:8px 0}.deck-title{font-size:14px;font-weight:600;text-align:center;margin-bottom:12px}
 .deck-cards{display:flex;flex-direction:column;gap:8px}
 .dc{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#fff;border:1.5px solid #eef0f4;cursor:pointer}.dc:hover{border-color:#c8ced8}.dc.sel{border-color:#1e3a5f;background:#f5f7fc}
-.dc .dl{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;font-family:"STKaiti","Noto Serif SC",serif}
-.dc .di{flex:1}.dc .dn{font-size:13px;font-weight:600}.dc .dd{font-size:10px;color:#8e96a8;margin-top:1px}
-.dc .dc{width:20px;height:20px;border-radius:50%;border:2px solid #dce0e8;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0}
+.dc .dl{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;flex-shrink:0;font-family:"STKaiti","Noto Serif SC",serif}
+.dc .di{flex:1}.dc .dn{font-size:14px;font-weight:600}.dc .dd{font-size:12px;color:#8e96a8;margin-top:1px}
+.dc .dc{width:20px;height:20px;border-radius:50%;border:2px solid #dce0e8;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;flex-shrink:0}
 .dc.sel .dc{background:#1e3a5f;border-color:#1e3a5f}
 .deck-act{display:flex;gap:8px;margin-top:12px}
-.deck-act button{flex:1;padding:12px;border-radius:12px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.deck-act button{flex:1;padding:12px;border-radius:12px;border:none;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
 /* 岗位选择 */
 .roles{display:flex;flex-direction:column;gap:6px;margin:10px 0}
 .rl{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1.5px solid #eef0f4;background:#fff;cursor:pointer}
 .rl:hover{border-color:#c8ced8}.rl.sel{border-color:#1e3a5f;background:#f5f7fc}
 .rl .rc{width:16px;height:16px;border-radius:50%;border:2px solid #dce0e8;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .rl.sel .rc{background:#1e3a5f;border-color:#1e3a5f}.rl.sel .rc::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
-.rl .rn{font-size:13px;font-weight:600;flex:1}.rl .rd{font-size:10px;color:#8e96a8}
+.rl .rn{font-size:14px;font-weight:600;flex:1}.rl .rd{font-size:12px;color:#8e96a8}
 /* 体验卡 */
 .exp{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04);border:1px solid #eef0f4}
 .exp-head{background:linear-gradient(135deg,#1e3a5f,#2a4f7a);padding:16px 20px;color:#fff;position:relative}
-.exp-head .e-tag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:9px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);letter-spacing:.08em}
+.exp-head .e-tag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);letter-spacing:.08em}
 .exp-head .e-co{font-size:20px;font-weight:700;margin-top:8px;letter-spacing:.02em}
 .exp-body{padding:16px 20px}
-.exp-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f2f4f8;font-size:12px}
+.exp-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f2f4f8;font-size:14px}
 .exp-row:last-child{border:none}
 .exp-row .el{color:#8e96a8}.exp-row .ev{font-weight:600;color:#1a1a2e;text-align:right}
-.exp-sim{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:100px;font-size:10px;background:#fff3e0;color:#e65100;font-weight:600}
-/* 加载 */
-.loado{display:none;text-align:center;padding:16px 0}
-.loado .lt{font-size:13px;font-weight:600;margin-bottom:4px}
-.loado .ls{font-size:11px;color:#8e96a8;margin-bottom:14px;line-height:1.5}
-.loado .lb{width:100%;height:4px;border-radius:100px;background:#e8ebf0;overflow:hidden}
-.loado .lb span{display:block;height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,#1e3a5f,#3b82f6);animation:ld 2.8s ease forwards}
-@keyframes ld{0%{width:0}30%{width:25%}60%{width:55%}85%{width:82%}100%{width:100%}}
-.loado .lp{font-size:10px;color:#b0b7c4;margin-top:6px}
+.exp-sim{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:100px;font-size:12px;background:#fff3e0;color:#e65100;font-weight:600}
+/* 加载 — 步骤进度条 */
+.loado{display:none;padding:10px 0}
+.loado .lt{text-align:center;font-size:16px;font-weight:700}
+.loado .lt .pulse{display:inline-block;animation:pd 1.4s ease-in-out infinite}
+@keyframes pd{0%,100%{opacity:.4}50%{opacity:1}}
+.loado .ls{text-align:center;font-size:14px;color:#8e96a8;margin-bottom:18px;line-height:1.5}
+.loado .steps{display:flex;flex-direction:column;gap:8px;padding:0 4px}
+.loado .step{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;font-size:14px;transition:all .3s ease}
+.loado .step.active{background:#f0f5ff;color:#1e3a5f;font-weight:600}
+.loado .step.done{color:#3b82f6}
+.loado .step.pending{color:#b0b7c4}
+.loado .step-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:700}
+.loado .step.done .step-icon{background:#3b82f6;color:#fff;box-shadow:0 2px 6px rgba(59,130,246,.3)}
+.loado .step.active .step-icon{border:2px solid #3b82f6;border-top-color:transparent;animation:sp .7s linear infinite;background:transparent}
+.loado .step.pending .step-icon{border:2px solid #ddd}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loado .lb{width:60%;height:3px;border-radius:100px;background:#e8ebf0;overflow:hidden;margin:14px auto 0}
+.loado .lb span{display:block;height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,#1e3a5f,#3b82f6);animation:ld 3s ease forwards}
+@keyframes ld{0%{width:0}20%{width:18%}40%{width:38%}60%{width:58%}80%{width:78%}100%{width:100%}}
 /* 完成 */
 .suc{display:none;text-align:center;padding:20px 0}
 .suc .si{font-size:36px;margin-bottom:10px}
-.suc .st{font-size:15px;font-weight:700;line-height:1.5}
-.suc .ss{font-size:11px;color:#8e96a8;line-height:1.6;margin-top:6px}
-.suc .sb{display:inline-block;margin-top:14px;padding:10px 28px;border-radius:12px;border:none;background:linear-gradient(135deg,#1e3a5f,#2a4f7a);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.suc .st{font-size:16px;font-weight:700;line-height:1.5}
+.suc .ss{font-size:13px;color:#8e96a8;line-height:1.6;margin-top:6px}
+.suc .sb{display:inline-block;margin-top:14px;padding:10px 28px;border-radius:12px;border:none;background:linear-gradient(135deg,#1e3a5f,#2a4f7a);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
 .skipbar{text-align:center;margin-top:14px}
-.skipbar .skip{font-size:11px;color:#b0b7c4;text-decoration:underline;cursor:pointer;border:none;background:none;font-family:inherit;display:none}
-.note{font-size:10px;color:#c0c6d0;text-align:center;margin-top:10px;line-height:1.5;padding:6px 8px;background:#fafbfc;border-radius:8px}
+.skipbar .skip{font-size:13px;color:#b0b7c4;text-decoration:underline;cursor:pointer;border:none;background:none;font-family:inherit;display:none}
+.note{font-size:12px;color:#c0c6d0;text-align:center;margin-top:10px;line-height:1.5;padding:6px 8px;background:#fafbfc;border-radius:8px}
 </style>
 <script src="https://beacon.cdn.qq.com/sdk/4.5.9/beacon_web.min.js"></script>
 <script>
@@ -160,12 +171,23 @@ body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;bac
 </div>
 
 <!-- ═══ ═══ ═══ 阶段 5：加载 → 完成 ═══ ═══ ═══ -->
-<div class="loado" id="loado"><div class="lt">⏳ 正在装配</div><div class="ls" id="loadText">请耐心等待…</div><div class="lb"><span></span></div><div class="lp">系统正在准备中…</div></div>
+<div class="loado" id="loado">
+  <div class="lt"><span class="pulse">准备工作正在进行中…</span></div>
+  <div class="ls">这可能需要一分钟时间，请留在此页面</div>
+  <div class="steps" id="progressSteps">
+    <div class="step done" data-i="0"><span class="step-icon">✓</span><span>锁定你的目标央企</span></div>
+    <div class="step pending" data-i="1"><span class="step-icon"></span><span>匹配央企招聘机会库</span></div>
+    <div class="step pending" data-i="2"><span class="step-icon"></span><span>准备针对性简历模板</span></div>
+    <div class="step pending" data-i="3"><span class="step-icon"></span><span>构建求职行动路径</span></div>
+    <div class="step pending" data-i="4"><span class="step-icon"></span><span>整理启动包资料</span></div>
+  </div>
+  <div class="lb"><span></span></div>
+</div>
 <div class="suc" id="suc">
   <div class="si">🎉</div>
   <div class="st">已将 <span class="sn" id="sucName"></span> 设为你的当前起点</div>
   <div class="ss">接下来从央企求职通用流程开始。</div>
-  <div class="ss" style="font-size:10px;color:#b0b7c4;margin-top:2px">今天先完成：核验一个当前招聘机会并保存为候选</div>
+  <div class="ss" style="font-size:12px;color:#b0b7c4;margin-top:2px">今天先完成：核验一个当前招聘机会并保存为候选</div>
   <button class="sb" onclick="closeDraw()">🚀 开始第一个行动</button>
 </div>
 <div class="note" id="bottomNote">启点蓝图 · 央企起点卡不是替你做决定，而是帮你建立第一个候选池</div>
@@ -330,20 +352,35 @@ function saveCard(){
   if(selIdx<0||selectedRole<0)return;
   var c=deck[selIdx],r=c.p[selectedRole];
   hideAll();document.getElementById('loado').style.display='block';
-  document.getElementById('loadText').textContent='正在为'+c.n+'('+r+')匹配流程及资源，请耐心等待…';
-  setTimeout(function(){
-    hideAll();document.getElementById('suc').style.display='block';
-    document.getElementById('sucName').textContent=r+'·'+c.n.replace(/集团.*$/,'').trim();
-    // 存 state
-    var state=JSON.parse(localStorage.getItem('qdbp_start_state')||'{}');
-    state.zhaopin={guided:true,currentTarget:{name:c.n,ind:c.t||'',role:r},drawnCards:deck.map(function(x){return{name:x.n,ind:x.t||''}})};
-    localStorage.setItem('qdbp_start_state',JSON.stringify(state));
-    localStorage.setItem('qdbp_pkg','zhaopin');
-    var d=JSON.parse(localStorage.getItem('qdbp_drawn_packages')||'[]');
-    if(d.indexOf('zhaopin')===-1)d.push('zhaopin');
-    localStorage.setItem('qdbp_drawn_packages',JSON.stringify(d));
-    _persistDraw('zhaopin', state.zhaopin);
-  },2800);
+  // 逐步推进
+  var steps=document.querySelectorAll('#progressSteps .step');
+  var i=1;
+  function adv(){
+    if(i>=steps.length){
+      setTimeout(function(){
+        hideAll();document.getElementById('suc').style.display='block';
+        document.getElementById('sucName').textContent=r+'·'+c.n.replace(/集团.*$/,'').trim();
+        var state=JSON.parse(localStorage.getItem('qdbp_start_state')||'{}');
+        state.zhaopin={guided:true,currentTarget:{name:c.n,ind:c.t||'',role:r},drawnCards:deck.map(function(x){return{name:x.n,ind:x.t||''}})};
+        localStorage.setItem('qdbp_start_state',JSON.stringify(state));
+        localStorage.setItem('qdbp_pkg','zhaopin');
+        var d=JSON.parse(localStorage.getItem('qdbp_drawn_packages')||'[]');
+        if(d.indexOf('zhaopin')===-1)d.push('zhaopin');
+        localStorage.setItem('qdbp_drawn_packages',JSON.stringify(d));
+        _persistDraw('zhaopin', state.zhaopin);
+      },500);
+      return;
+    }
+    steps[i].className='step active';
+    steps[i].querySelector('.step-icon').textContent='';
+    setTimeout(function(){
+      steps[i].className='step done';
+      steps[i].querySelector('.step-icon').textContent='✓';
+      i++;
+      adv();
+    },700);
+  }
+  setTimeout(adv,400);
 }
 function closeDraw(){window.location.href='index.html?ws=1&v='+Date.now()}
 function skipDraw(){
