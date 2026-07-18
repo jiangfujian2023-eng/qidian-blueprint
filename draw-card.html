@@ -369,7 +369,7 @@ document.getElementById('btnSaveCard').onclick=saveCard;
   if(!isNew&&drawn.indexOf('zhaopin')!==-1){skipDraw();return}
   if(!isNew)document.getElementById('skipBtn').style.display='inline';
   userName=getLocalUserName();
-  cur=pick();renderCard(cur);upColl();document.getElementById('sDrawSub').textContent='解锁三家央企，再选一家作为你的目标起点。已收集 0/3';
+  cur=pick();renderCard(cur);upColl();
 })();
 </script>
 </body>
