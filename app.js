@@ -1114,7 +1114,7 @@ function renderDataOverview(){
           '<div class="wdo-right-eyebrow">核心数据资产</div>'+
           '<div class="wdo-right-title">实时数据<br>规模与覆盖</div>'+
         '</div>'+
-        '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0">'+
+        '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
           '<div class="wdo-status"><span class="wdo-status-dot"></span>'+data.status+'</div>'+
           dlSmallHtml+
         '</div>'+
