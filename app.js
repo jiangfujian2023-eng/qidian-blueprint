@@ -682,67 +682,14 @@ async function handleAuth(e){
   return false;
 }
 
-// ═══ 注册 Tab 领取账号 ═══
+// ═══ 注册 Tab 领取账号（R1 安全处置：已关闭）═══
 async function regGenerateAccount(){
-  var btn=document.getElementById('regGenBtn');
-  if(!btn||btn.disabled)return;
-  btn.disabled=true;btn.textContent='⏳ 生成中…';
-  var username='demo'+Math.floor(Math.random()*900+100);
-  var displayName='体验用户';
-  var password='123456';
-  try{
-    if(typeof sb!=='undefined'&&sb){
-      var{data:found}=await sb.from('qdbp_invitees').select('id,username,display_name').eq('status','assigned').order('id').limit(1).single();
-      if(found){
-        username=found.username;
-        await sb.from('qdbp_invitees').update({status:'invited'}).eq('id',found.id);
-      }
-    }
-  }catch(e){console.warn('Supabase 不可用，本地生成');}
-  // 保存到本地用户库（用于内测 Tab 登录）
-  var localUsers=JSON.parse(localStorage.getItem('qdbp_local_users')||'[]');
-  localUsers.push({username:username,password:password,display_name:displayName});
-  localStorage.setItem('qdbp_local_users',JSON.stringify(localUsers));
-  document.getElementById('regGenResult').style.display='block';
-  document.getElementById('regUsername').textContent=username;
-  btn.textContent='✅ 已生成';
-  btn.disabled=false;
+  showToast('🔒 内测注册已关闭，请使用正式注册');
 }
 
-// ═══ 内测 Demo 账号登录 ═══
+// ═══ 内测 Demo 账号登录（R1 安全处置：已关闭）═══
 async function loginDemo(){
-  const u=document.getElementById('demoUsername').value.trim();
-  const p=document.getElementById('demoPassword').value;
-  if(!u){showToast('请输入内测账号');return;}
-  if(!p){showToast('请输入密码');return;}
-  const btn=document.querySelector('#demoLoginSection .lf-submit');
-  if(btn){btn.textContent='登录中…';btn.disabled=true;}
-  try{
-    var data=null;
-    // 优先查本地存储的账号
-    var localUsers=JSON.parse(localStorage.getItem('qdbp_local_users')||'[]');
-    var localMatch=localUsers.find(function(x){return x.username===u&&x.password===p;});
-    if(localMatch){data=localMatch;}
-    else if(sbReady){
-      var{_data,error}=await supabaseClient.from('qdbp_invitees').select('*').eq('username',u).eq('password',p).single();
-      if(_data)data=_data;
-    }
-    if(!data){showToast('账号或密码错误');return;}
-    localStorage.setItem('qdbp_demo_user',JSON.stringify({isDemo:true,username:data.username,display_name:data.display_name,city:data.city,school:data.school,grade:data.grade,goal:data.goal}));
-    closeLoginModal();
-    _restoreUS(); // 按账号还原抽卡/选包状态
-    if(!data.display_name){
-      showDemoProfile(data.username);
-    }else{
-      if(sbReady)await supabaseClient.from('qdbp_invitees').update({last_login:new Date().toISOString()}).eq('username',data.username);
-      showToast('欢迎回来！');
-      var d=JSON.parse(localStorage.getItem('qdbp_drawn_packages')||'[]');
-      if(d.length===0){window.location.href='draw-card.html';return;}
-      openWorkspace();
-      return;
-    }
-  }catch(e){showToast('登录失败，请重试');}
-  finally{if(btn){btn.textContent='登 录';btn.disabled=false;}}
+  showToast('🔒 内测模式已关闭，请使用正式账号登录');
 }
 function showDemoProfile(username){
   const ov=document.getElementById('demoProfileOverlay');
@@ -2159,19 +2106,14 @@ function closeAdminLogin(){
   if(ov)ov.classList.remove('open');
 }
 function submitAdminLogin(){
-  const inp=document.getElementById('adminPasswordInput');
+  // R1 安全处置：管理员后台已关闭
   const err=document.getElementById('adminLoginError');
-  if(!inp)return;
-  if(inp.value===ADMIN_PASSWORD){
-    try{localStorage.setItem('qdbp_admin','1');}catch(e){}
-    closeAdminLogin();
-    showAdminDashboard();
-  }else{
-    if(err)err.style.display='block';
-    inp.value='';
-    inp.focus();
-  }
+  if(err){err.textContent='🔒 管理后台安全升级中，暂时关闭';err.style.display='block';}
+  const inp=document.getElementById('adminPasswordInput');
+  if(inp)inp.value='';
 }
+function showAdminDashboard(){/* R1 安全处置：已关闭 */}
+function _adminShowError(){}/* R1 安全处置：已关闭 */
 /* ── 管理员后台（全屏独立页面） ── */
 function adminLogout(){
   try{localStorage.removeItem('qdbp_admin');}catch(e){}

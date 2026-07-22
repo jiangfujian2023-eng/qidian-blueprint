@@ -1,20 +1,18 @@
 // ═══════════════════════════════════════
-// 启点蓝图 · 集中配置
-// 换平台只需改这里
-// 使用 window.XXX 显式挂到全局，避免 const 的 script-level scope 问题
+// 启点蓝图 · 安全配置（前端公开版）
+// 此文件仅包含设计上允许前端的公开配置。
+// 敏感配置：见 .env.example（仅服务端）
 // ═══════════════════════════════════════
 
-// ── Supabase ──
+// ── Supabase（公钥，设计上可公开）──
 window.SUPABASE_URL='https://qprucplfqurxkqrxcgpp.supabase.co';
 window.SUPABASE_KEY='sb_publishable_q4sCMrRxa47T6WeKKTs0ig_5ORKCrud';
 
-// ── 飞书反馈 Webhook ──
-window.FEISHU_FEEDBACK_WEBHOOK='https://open.feishu.cn/open-apis/bot/v2/hook/fec284fc-9143-4280-9ddc-845cf5b3edb1';
-
-// ── 管理后台 ──
-window.ADMIN_PASSWORD='qidian2026';
-window.ANALYTICS_TABLE='qdbp_analytics';
-
-// ── Beacon 埋点 ──
+// ── 埋点（公开）──
 window.BEACON_APPKEY='0WEB06U85YBSLJNL';
 window.SANDBOX_ID='bb320abbd7e444729e0451e3ef00ce0b';
+window.ANALYTICS_TABLE='qdbp_analytics';
+
+// ── 管理后台（已关闭——R1 安全处置）──
+// ADMIN_PASSWORD 已移除。管理功能已在前端关闭。
+// 如需恢复，须改为服务端验证方式。
